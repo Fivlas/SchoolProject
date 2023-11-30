@@ -9,10 +9,10 @@
 </head>
 
 <body class="md:flex justify-center bg-black w-full h-full min-h-screen">
-    <div class="h-full text-white hidden md:block">
-        <div>
-            <ul class="px-2 py-1 gap-1 flex flex-col">
-                <li class="w-[259px] h-[58px] py-1 flex justify-start group -mt-[6px] ">
+    <div class="h-screen text-white hidden md:block">
+        <div class="relative">
+            <ul class="px-2 py-1 gap-1 flex flex-col w-[275px]">
+                <li class="w-[259px] h-[58px] py-1 flex justify-start group -mt-[6px]">
                     <div
                         class="h-[50.25px] p-3 flex group-hover:bg-[rgba(231,233,234,0.1)] transition-all rounded-full cursor-pointer">
                         <svg viewBox="0 0 24 24" aria-hidden="true" class="svg">
@@ -142,23 +142,53 @@
                     </div>
                 </li>
                 <li class="flex justify-start">
-                    <button
-                        class="text-center bg-[#1D9BF0] w-[233px] mt-[10px] font-bold px-8 h-[52px] button-left-nav rounded-full cursor-pointer">
+                    <button onclick="addTweetModal.showModal()"
+                        class="text-center bg-[#1D9BF0] w-[233px] mt-[10px] font-bold px-8 h-[52px] button-left-nav rounded-full cursor-pointer hover:opacity-80 transition-opacity">
                         Opublikuj Wpis
                     </button>
+                    <dialog id="addTweetModal" class="modal min-h-[220px]">
+                        <div class="modal-box flex flex-col bg-black border border-white w-full">
+                            <div class="flex items-center">
+                                <img src="https://pbs.twimg.com/profile_images/1452049558935162883/-H6zWFzU_normal.png" class="w-11 h-11 rounded-full mr-3 pt-3" alt="">
+                                <textarea name="" class="w-full bg-black outline-none" cols="30" rows="10"></textarea>
+                            </div>
+                            <div class="justify-end w-full flex">
+                                <button class="text-center bg-[#1D9BF0] w-[233px] mt-[10px] font-bold px-8 h-[52px] button-left-nav rounded-full cursor-pointer hover:opacity-80 transition-opacity">Opublikuj Wpis</button>
+                            </div>
+                        </div>
+                        <form method="dialog" class="modal-backdrop">
+                            <button>close</button>
+                        </form>
+                    </dialog>
                 </li>
-                <li class="flex items-center w-full my-3 p-3 h-16 hover:bg-[rgba(231,233,234,0.1)] transition-all rounded-full">
-                    <div class="flex w-full">
-                        <img src="https://pbs.twimg.com/profile_images/1452049558935162883/-H6zWFzU_normal.png" class="w-11 h-11 rounded-full" alt="">
-                        <div class="flex flex-col text-[15px] w-[74px] h-[41px] justify-start px-2">
-                            <span>Fivlas</span>
-                            <span class="text-[#71767B]">@fivlas</span>
+                <div class="dropdown dropdown-top">
+                    <li role="button" tabindex="0"
+                        class="flex items-center w-full my-3 p-3 h-16 hover:bg-[rgba(231,233,234,0.1)] transition-all rounded-full cursor-pointer button-left-nav">
+                        <div class="flex w-full">
+                            <img src="https://pbs.twimg.com/profile_images/1452049558935162883/-H6zWFzU_normal.png"
+                                class="w-11 h-11 rounded-full" alt="">
+                            <div class="flex flex-col text-[15px] w-[74px] h-[41px] justify-start px-2">
+                                <span>Fivlas</span>
+                                <span class="text-[#71767B]">@fivlas</span>
+                            </div>
+                            <div class="flex items-center w-full justify-end">
+                                <svg viewBox="0 0 24 24" aria-hidden="true" class="svg">
+                                    <g>
+                                        <path
+                                            d="M3 12c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zm9 2c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm7 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"
+                                            fill="#fff"></path>
+                                    </g>
+                                </svg>
+                            </div>
                         </div>
-                        <div class="flex items-center w-full justify-end">
-                            <svg viewBox="0 0 24 24" aria-hidden="true" class="svg"><g><path d="M3 12c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zm9 2c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm7 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z" fill="#fff"></path></g></svg>
-                        </div>
+                    </li>
+                    <div class="flex justify-center">
+                        <ul
+                            class="dropdown-content z-[1] menu p-2 shadow bg-black dropdown-shadow rounded-box w-[110%]">
+                            <li><a class="px-4 py-3">Wyloguj się z konta @fivlas</a></li>
+                        </ul>
                     </div>
-                </li>
+                </div>
             </ul>
         </div>
     </div>
@@ -199,9 +229,12 @@
         <div class="w-full h-20 px-0 md:w-[600px] md:h-[78px] md:px-[16px] post">dwqiodjwq</div>
     </div>
     <div class="md:flex flex-col hidden gap-4 ml-[30px]">
-        <aside class="w-[350px] h-[165px] bg-[#16181c]"></aside>
-        <aside class="w-[350px] h-[165px] bg-[#16181c]"></aside>
-        <aside class="w-[350px] h-[165px] bg-[#16181c]"></aside>
+        <div>
+            <aside class="w-[350px] h-[165px] bg-[#16181c]"></aside>
+            <aside class="w-[350px] h-[165px] bg-[#16181c]"></aside>
+            <aside class="w-[350px] h-[165px] bg-[#16181c]"></aside>
+
+        </div>
     </div>
 </body>
 
