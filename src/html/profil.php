@@ -214,6 +214,35 @@
     </div>
 
     <div class="flex flex-col">
+        <?php
+        if (isset($_GET['u'])) {
+            $usernameURL = urldecode($_GET['u']);
+
+            require_once('../php/Classes/db_connect.php');
+            require_once('../php/Classes/QueryBuilder.php');
+
+            $conn = connectToDatabase();
+
+            $queryBuilder = new SQLQueryBuilder('users', $conn);
+
+            $queryBuilder->addCondition('username', $usernameURL);
+
+            $data = $queryBuilder->executeQuery();
+
+            if (!empty($data)) {
+                foreach ($data as $row) {
+                    $username = $row['username'];
+                    $displayName = $row['display_name'];
+                    $createdAt = $row['created_at'];
+                }
+            }
+
+            $dateTime = new DateTime($createdAt);
+            $createdAt = $dateTime->format('F Y');
+
+            $conn->close();
+        }
+        ?>
 
         <!-- PROFIL -->
         <div class="w-full min-h-20 px-0 md:w-[600px] md:min-h-[78px] post">
@@ -231,8 +260,9 @@
                     <div class="modal-box">
                         <h3 class="font-bold text-lg">Edytuj Profil</h3>
                         <div class="flex flex-col justify-center items-center gap-3">
-                            <img src="https://pbs.twimg.com/profile_images/1452049558935162883/-H6zWFzU_normal.png" alt="avatar"
-                            class="md:w-[133px] md:h-[133px] rounded-full h-[92px] w-[92px] border border-black">
+                            <img src="https://pbs.twimg.com/profile_images/1452049558935162883/-H6zWFzU_normal.png"
+                                alt="avatar"
+                                class="md:w-[133px] md:h-[133px] rounded-full h-[92px] w-[92px] border border-black">
                             <input type="text" placeholder="Fivlas" class="input input-bordered w-full max-w-xs" />
                             <button class="btn">Zapisz</button>
                         </div>
@@ -245,10 +275,10 @@
             <div class="relative mt-11 px-[16px]">
                 <div class="flex flex-col mb-3">
                     <div class="font-bold text-2xl">
-                        Fivlas
+                        <?php echo $displayName?>
                     </div>
                     <div class="text-[#71767b]">
-                        @fivlas
+                        <?php echo $username?>
                     </div>
                     <div class="mt-4 text-[#71767b] flex items-center">
                         <svg viewBox="0 0 24 24" aria-hidden="true" class="w-[14px] h-[14px]">
@@ -258,7 +288,7 @@
                                     fill="#71767b"></path>
                             </g>
                         </svg>
-                        <span class="pl-1">Dołączył/a październik 2021</span>
+                        <span class="pl-1"><?php echo $createdAt?></span>
                     </div>
                 </div>
             </div>
@@ -634,7 +664,6 @@
 
 
     </div>
-
 
     <div class="md:flex flex-col hidden gap-4 ml-[30px]">
         <aside class="w-[350px] h-[165px] bg-[#16181c]"></aside>
