@@ -240,7 +240,6 @@
             $dateTime = new DateTime($createdAt);
             $createdAt = $dateTime->format('F Y');
 
-            $conn->close();
         }
         ?>
 
@@ -670,6 +669,9 @@
         <aside class="w-[350px] h-[165px] bg-[#16181c]"></aside>
         <aside class="w-[350px] h-[165px] bg-[#16181c]"></aside>
     </div>
+    <?php
+        $conn->close();
+    ?>
 </body>
 
 </html>
