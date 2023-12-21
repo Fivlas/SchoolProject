@@ -730,6 +730,43 @@ html {
   --tw-backdrop-sepia:  ;
 }
 
+<<<<<<< Updated upstream
+=======
+.container {
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+}
+
+>>>>>>> Stashed changes
 .avatar {
   position: relative;
   display: inline-flex;
@@ -763,6 +800,15 @@ html {
     --tw-text-opacity: 1;
     color: var(--fallback-nc,oklch(var(--nc)/var(--tw-text-opacity)));
   }
+<<<<<<< Updated upstream
+=======
+
+  .table tr.hover:hover,
+  .table tr.hover:nth-child(even):hover {
+    --tw-bg-opacity: 1;
+    background-color: var(--fallback-b2,oklch(var(--b2)/var(--tw-bg-opacity)));
+  }
+>>>>>>> Stashed changes
 }
 
 .btn {
@@ -824,6 +870,18 @@ html {
   content: var(--tw-content);
 }
 
+<<<<<<< Updated upstream
+=======
+.diff {
+  position: relative;
+  display: grid;
+  width: 100%;
+  overflow: hidden;
+  container-type: inline-size;
+  grid-template-columns: auto 1fr;
+}
+
+>>>>>>> Stashed changes
 .dropdown {
   position: relative;
   display: inline-block;
@@ -1196,6 +1254,42 @@ html {
   background-color: var(--fallback-bc,oklch(var(--bc)/0.2));
 }
 
+<<<<<<< Updated upstream
+=======
+.table {
+  position: relative;
+  width: 100%;
+  border-radius: var(--rounded-box, 1rem);
+  text-align: left;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.table :where(.table-pin-rows thead tr) {
+  position: sticky;
+  top: 0px;
+  z-index: 1;
+  --tw-bg-opacity: 1;
+  background-color: var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity)));
+}
+
+.table :where(.table-pin-rows tfoot tr) {
+  position: sticky;
+  bottom: 0px;
+  z-index: 1;
+  --tw-bg-opacity: 1;
+  background-color: var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity)));
+}
+
+.table :where(.table-pin-cols tr th) {
+  position: sticky;
+  left: 0px;
+  right: 0px;
+  --tw-bg-opacity: 1;
+  background-color: var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity)));
+}
+
+>>>>>>> Stashed changes
 .textarea {
   min-height: 3rem;
   flex-shrink: 1;
@@ -1635,6 +1729,43 @@ html {
   }
 }
 
+<<<<<<< Updated upstream
+=======
+:is([dir="rtl"] .table) {
+  text-align: right;
+}
+
+.table :where(th, td) {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  vertical-align: middle;
+}
+
+.table tr.active,
+  .table tr.active:nth-child(even),
+  .table-zebra tbody tr:nth-child(even) {
+  --tw-bg-opacity: 1;
+  background-color: var(--fallback-b2,oklch(var(--b2)/var(--tw-bg-opacity)));
+}
+
+.table :where(thead, tbody) :where(tr:not(:last-child)),
+    .table :where(thead, tbody) :where(tr:first-child:last-child) {
+  border-bottom-width: 1px;
+  --tw-border-opacity: 1;
+  border-bottom-color: var(--fallback-b2,oklch(var(--b2)/var(--tw-border-opacity)));
+}
+
+.table :where(thead, tfoot) {
+  white-space: nowrap;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 700;
+  color: var(--fallback-bc,oklch(var(--bc)/0.6));
+}
+
+>>>>>>> Stashed changes
 .textarea:focus {
   box-shadow: none;
   border-color: var(--fallback-bc,oklch(var(--bc)/0.2));
@@ -1816,6 +1947,7 @@ html {
   position: relative;
 }
 
+<<<<<<< Updated upstream
 .-top-5 {
   top: -1.25rem;
 }
@@ -1872,10 +2004,13 @@ html {
   top: -2.5rem;
 }
 
+=======
+>>>>>>> Stashed changes
 .-top-16 {
   top: -4rem;
 }
 
+<<<<<<< Updated upstream
 .-top-20 {
   top: -5rem;
 }
@@ -1920,10 +2055,13 @@ html {
   top: 45%;
 }
 
+=======
+>>>>>>> Stashed changes
 .z-\[1\] {
   z-index: 1;
 }
 
+<<<<<<< Updated upstream
 .my-3 {
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
@@ -1934,14 +2072,27 @@ html {
   margin-right: 0px;
 }
 
+=======
+>>>>>>> Stashed changes
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
 }
 
+<<<<<<< Updated upstream
 .my-2 {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
+=======
+.my-3 {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.my-auto {
+  margin-top: auto;
+  margin-bottom: auto;
+>>>>>>> Stashed changes
 }
 
 .-mt-\[2px\] {
@@ -1960,6 +2111,17 @@ html {
   margin-bottom: 0.5rem;
 }
 
+<<<<<<< Updated upstream
+=======
+.mb-3 {
+  margin-bottom: 0.75rem;
+}
+
+.mb-\[32px\] {
+  margin-bottom: 32px;
+}
+
+>>>>>>> Stashed changes
 .mb-\[8px\] {
   margin-bottom: 8px;
 }
@@ -1976,6 +2138,13 @@ html {
   margin-left: 0.75rem;
 }
 
+<<<<<<< Updated upstream
+=======
+.ml-4 {
+  margin-left: 1rem;
+}
+
+>>>>>>> Stashed changes
 .ml-\[30px\] {
   margin-left: 30px;
 }
@@ -1986,12 +2155,34 @@ html {
 
 .mt-1 {
   margin-top: 0.25rem;
+<<<<<<< Updated upstream
+=======
+}
+
+.mt-11 {
+  margin-top: 2.75rem;
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
+>>>>>>> Stashed changes
 }
 
 .mt-3 {
   margin-top: 0.75rem;
 }
 
+<<<<<<< Updated upstream
+=======
+.mt-4 {
+  margin-top: 1rem;
+}
+
+.mt-5 {
+  margin-top: 1.25rem;
+}
+
+>>>>>>> Stashed changes
 .mt-\[10px\] {
   margin-top: 10px;
 }
@@ -2004,6 +2195,7 @@ html {
   margin-top: 22px;
 }
 
+<<<<<<< Updated upstream
 .mt-5 {
   margin-top: 1.25rem;
 }
@@ -2046,16 +2238,85 @@ html {
 
 .mt-2 {
   margin-top: 0.5rem;
+=======
+.mt-\[51px\] {
+  margin-top: 51px;
+}
+
+.mt-\[60px\] {
+  margin-top: 60px;
+}
+
+.mt-\[9px\] {
+  margin-top: 9px;
+}
+
+.mt-auto {
+  margin-top: auto;
+}
+
+.ml-10 {
+  margin-left: 2.5rem;
+}
+
+.ml-20 {
+  margin-left: 5rem;
+}
+
+.mb-5 {
+  margin-bottom: 1.25rem;
+}
+
+.mb-\[68px\] {
+  margin-bottom: 68px;
+}
+
+.mb-\[33px\] {
+  margin-bottom: 33px;
+}
+
+.mt-\[244px\] {
+  margin-top: 244px;
+}
+
+.mt-\[27px\] {
+  margin-top: 27px;
+}
+
+.mt-\[200px\] {
+  margin-top: 200px;
+}
+
+.line-clamp-4 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+>>>>>>> Stashed changes
 }
 
 .flex {
   display: flex;
 }
 
+<<<<<<< Updated upstream
+=======
+.table {
+  display: table;
+}
+
+>>>>>>> Stashed changes
 .hidden {
   display: none;
 }
 
+<<<<<<< Updated upstream
+=======
+.h-10 {
+  height: 2.5rem;
+}
+
+>>>>>>> Stashed changes
 .h-11 {
   height: 2.75rem;
 }
@@ -2072,6 +2333,17 @@ html {
   height: 6rem;
 }
 
+<<<<<<< Updated upstream
+=======
+.h-36 {
+  height: 9rem;
+}
+
+.h-\[14px\] {
+  height: 14px;
+}
+
+>>>>>>> Stashed changes
 .h-\[165px\] {
   height: 165px;
 }
@@ -2100,6 +2372,13 @@ html {
   height: 58px;
 }
 
+<<<<<<< Updated upstream
+=======
+.h-\[92px\] {
+  height: 92px;
+}
+
+>>>>>>> Stashed changes
 .h-auto {
   height: auto;
 }
@@ -2112,6 +2391,7 @@ html {
   height: 100vh;
 }
 
+<<<<<<< Updated upstream
 .h-5 {
   height: 1.25rem;
 }
@@ -2144,14 +2424,47 @@ html {
 
 .h-\[22px\] {
   height: 22px;
+=======
+.max-h-96 {
+  max-height: 24rem;
+}
+
+.max-h-\[380px\] {
+  max-height: 380px;
+}
+
+.max-h-\[57px\] {
+  max-height: 57px;
+}
+
+.max-h-\[26px\] {
+  max-height: 26px;
+>>>>>>> Stashed changes
 }
 
 .min-h-\[220px\] {
   min-height: 220px;
 }
 
+<<<<<<< Updated upstream
 .min-h-screen {
   min-height: 100vh;
+=======
+.min-h-\[48px\] {
+  min-height: 48px;
+}
+
+.min-h-screen {
+  min-height: 100vh;
+}
+
+.w-1\/2 {
+  width: 50%;
+}
+
+.w-1\/4 {
+  width: 25%;
+>>>>>>> Stashed changes
 }
 
 .w-11 {
@@ -2162,10 +2475,24 @@ html {
   width: 16rem;
 }
 
+<<<<<<< Updated upstream
+=======
+.w-80 {
+  width: 20rem;
+}
+
+>>>>>>> Stashed changes
 .w-\[110\%\] {
   width: 110%;
 }
 
+<<<<<<< Updated upstream
+=======
+.w-\[14px\] {
+  width: 14px;
+}
+
+>>>>>>> Stashed changes
 .w-\[150\%\] {
   width: 150%;
 }
@@ -2186,6 +2513,13 @@ html {
   width: 275px;
 }
 
+<<<<<<< Updated upstream
+=======
+.w-\[300px\] {
+  width: 300px;
+}
+
+>>>>>>> Stashed changes
 .w-\[350px\] {
   width: 350px;
 }
@@ -2194,10 +2528,18 @@ html {
   width: 74px;
 }
 
+<<<<<<< Updated upstream
+=======
+.w-\[92px\] {
+  width: 92px;
+}
+
+>>>>>>> Stashed changes
 .w-full {
   width: 100%;
 }
 
+<<<<<<< Updated upstream
 .w-\[92px\] {
   width: 92px;
 }
@@ -2216,6 +2558,18 @@ html {
 
 .w-\[22px\] {
   width: 22px;
+=======
+.w-screen {
+  width: 100vw;
+}
+
+.w-\[440px\] {
+  width: 440px;
+}
+
+.w-\[600px\] {
+  width: 600px;
+>>>>>>> Stashed changes
 }
 
 .max-w-xs {
@@ -2266,14 +2620,24 @@ html {
   gap: 4rem;
 }
 
+<<<<<<< Updated upstream
 .gap-4 {
   gap: 1rem;
 }
 
+=======
+>>>>>>> Stashed changes
 .gap-3 {
   gap: 0.75rem;
 }
 
+<<<<<<< Updated upstream
+=======
+.gap-4 {
+  gap: 1rem;
+}
+
+>>>>>>> Stashed changes
 .rounded-box {
   border-radius: var(--rounded-box, 1rem);
 }
@@ -2286,18 +2650,37 @@ html {
   border-radius: 0.75rem;
 }
 
+<<<<<<< Updated upstream
+=======
+.rounded-sm {
+  border-radius: 0.125rem;
+}
+
+.rounded-md {
+  border-radius: 0.375rem;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+>>>>>>> Stashed changes
 .border {
   border-width: 1px;
 }
 
+<<<<<<< Updated upstream
 .border-2 {
   border-width: 2px;
 }
 
+=======
+>>>>>>> Stashed changes
 .border-4 {
   border-width: 4px;
 }
 
+<<<<<<< Updated upstream
 .border-\[5px\] {
   border-width: 5px;
 }
@@ -2310,6 +2693,11 @@ html {
 .border-slate-800 {
   --tw-border-opacity: 1;
   border-color: rgb(30 41 59 / var(--tw-border-opacity));
+=======
+.border-\[\#546471\] {
+  --tw-border-opacity: 1;
+  border-color: rgb(84 100 113 / var(--tw-border-opacity));
+>>>>>>> Stashed changes
 }
 
 .border-\[rgb\(83\2c 100\2c 113\)\] {
@@ -2322,6 +2710,19 @@ html {
   border-color: rgb(0 0 0 / var(--tw-border-opacity));
 }
 
+<<<<<<< Updated upstream
+=======
+.border-white {
+  --tw-border-opacity: 1;
+  border-color: rgb(255 255 255 / var(--tw-border-opacity));
+}
+
+.border-\[\#333639\] {
+  --tw-border-opacity: 1;
+  border-color: rgb(51 54 57 / var(--tw-border-opacity));
+}
+
+>>>>>>> Stashed changes
 .bg-\[\#16181c\] {
   --tw-bg-opacity: 1;
   background-color: rgb(22 24 28 / var(--tw-bg-opacity));
@@ -2332,6 +2733,14 @@ html {
   background-color: rgb(29 155 240 / var(--tw-bg-opacity));
 }
 
+<<<<<<< Updated upstream
+=======
+.bg-\[\#1d9bf0\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(29 155 240 / var(--tw-bg-opacity));
+}
+
+>>>>>>> Stashed changes
 .bg-black {
   --tw-bg-opacity: 1;
   background-color: rgb(0 0 0 / var(--tw-bg-opacity));
@@ -2342,6 +2751,14 @@ html {
   background-color: rgb(71 85 105 / var(--tw-bg-opacity));
 }
 
+<<<<<<< Updated upstream
+=======
+.bg-\[\#eff3f4\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(239 243 244 / var(--tw-bg-opacity));
+}
+
+>>>>>>> Stashed changes
 .p-2 {
   padding: 0.5rem;
 }
@@ -2370,6 +2787,7 @@ html {
   padding-right: 2rem;
 }
 
+<<<<<<< Updated upstream
 .py-1 {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
@@ -2380,21 +2798,51 @@ html {
   padding-bottom: 0.75rem;
 }
 
+=======
+>>>>>>> Stashed changes
 .px-\[16px\] {
   padding-left: 16px;
   padding-right: 16px;
 }
 
+<<<<<<< Updated upstream
+=======
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+>>>>>>> Stashed changes
 .py-2 {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
 
+<<<<<<< Updated upstream
+=======
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+>>>>>>> Stashed changes
 .py-4 {
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
 
+<<<<<<< Updated upstream
+=======
+.px-20 {
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
+
+.pl-1 {
+  padding-left: 0.25rem;
+}
+
+>>>>>>> Stashed changes
 .pl-5 {
   padding-left: 1.25rem;
 }
@@ -2407,14 +2855,28 @@ html {
   padding-top: 0.75rem;
 }
 
+<<<<<<< Updated upstream
 .pl-1 {
   padding-left: 0.25rem;
+=======
+.pl-\[80px\] {
+  padding-left: 80px;
+}
+
+.pl-20 {
+  padding-left: 5rem;
+}
+
+.pl-2 {
+  padding-left: 0.5rem;
+>>>>>>> Stashed changes
 }
 
 .text-center {
   text-align: center;
 }
 
+<<<<<<< Updated upstream
 .text-\[15px\] {
   font-size: 15px;
 }
@@ -2427,6 +2889,14 @@ html {
 .text-3xl {
   font-size: 1.875rem;
   line-height: 2.25rem;
+=======
+.font-\[\'TwitterChirp\'\] {
+  font-family: 'TwitterChirp';
+}
+
+.font-\[\'TwitterChirpExtendedHeavy\'\] {
+  font-family: 'TwitterChirpExtendedHeavy';
+>>>>>>> Stashed changes
 }
 
 .text-2xl {
@@ -2434,11 +2904,44 @@ html {
   line-height: 2rem;
 }
 
+<<<<<<< Updated upstream
+=======
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
+.text-7xl {
+  font-size: 4.5rem;
+  line-height: 1;
+}
+
+.text-\[11px\] {
+  font-size: 11px;
+}
+
+.text-\[15px\] {
+  font-size: 15px;
+}
+
+.text-\[17px\] {
+  font-size: 17px;
+}
+
+>>>>>>> Stashed changes
 .text-lg {
   font-size: 1.125rem;
   line-height: 1.75rem;
 }
 
+<<<<<<< Updated upstream
+=======
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+>>>>>>> Stashed changes
 .font-bold {
   font-weight: 700;
 }
@@ -2447,11 +2950,27 @@ html {
   line-height: 1.5rem;
 }
 
+<<<<<<< Updated upstream
+=======
+.text-\[\#1d9bf0\] {
+  --tw-text-opacity: 1;
+  color: rgb(29 155 240 / var(--tw-text-opacity));
+}
+
+>>>>>>> Stashed changes
 .text-\[\#71767B\] {
   --tw-text-opacity: 1;
   color: rgb(113 118 123 / var(--tw-text-opacity));
 }
 
+<<<<<<< Updated upstream
+=======
+.text-\[\#71767b\] {
+  --tw-text-opacity: 1;
+  color: rgb(113 118 123 / var(--tw-text-opacity));
+}
+
+>>>>>>> Stashed changes
 .text-blue-400 {
   --tw-text-opacity: 1;
   color: rgb(96 165 250 / var(--tw-text-opacity));
@@ -2462,9 +2981,15 @@ html {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+<<<<<<< Updated upstream
 .text-\[\#71767b\] {
   --tw-text-opacity: 1;
   color: rgb(113 118 123 / var(--tw-text-opacity));
+=======
+.text-black {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
+>>>>>>> Stashed changes
 }
 
 .shadow {
@@ -2490,10 +3015,95 @@ html {
   transition-duration: 150ms;
 }
 
+<<<<<<< Updated upstream
+=======
+.line-clamp-4 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
+@font-face {
+  font-family: TwitterChirpExtendedHeavy;
+
+  src: url(https://abs.twimg.com/fonts/chirp-extended-heavy-web.woff2) format('woff2');
+
+  src: url(https://abs.twimg.com/fonts/chirp-extended-heavy-web.woff) format('woff');
+
+  font-weight: 800;
+
+  font-style: 'normal';
+
+  font-display: 'swap';
+}
+
+@font-face {
+  font-family: TwitterChirp;
+
+  src: url(https://abs.twimg.com/fonts/chirp-regular-web.woff2) format('woff2');
+
+  src: url(https://abs.twimg.com/fonts/chirp-regular-web.woff) format('woff');
+
+  font-weight: 400;
+
+  font-style: 'normal';
+
+  font-display: 'swap';
+}
+
+@font-face {
+  font-family: TwitterChirp;
+
+  src: url(https://abs.twimg.com/fonts/chirp-medium-web.woff2) format('woff2');
+
+  src: url(https://abs.twimg.com/fonts/chirp-medium-web.woff) format('woff');
+
+  font-weight: 500;
+
+  font-style: 'normal';
+
+  font-display: 'swap';
+}
+
+@font-face {
+  font-family: TwitterChirp;
+
+  src: url(https://abs.twimg.com/fonts/chirp-bold-web.woff2) format('woff2');
+
+  src: url(https://abs.twimg.com/fonts/chirp-bold-web.woff) format('woff');
+
+  font-weight: 700;
+
+  font-style: 'normal';
+
+  font-display: 'swap';
+}
+
+@font-face {
+  font-family: TwitterChirp;
+
+  src: url(https://abs.twimg.com/fonts/chirp-heavy-web.woff2) format('woff2');
+
+  src: url(https://abs.twimg.com/fonts/chirp-heavy-web.woff) format('woff');
+
+  font-weight: 800;
+
+  font-style: 'normal';
+
+  font-display: 'swap';
+}
+
+body::-webkit-scrollbar {
+  width: 0 !important;
+}
+
+>>>>>>> Stashed changes
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
   --tw-text-opacity: 1;
   color: rgb(231 233 234 / var(--tw-text-opacity));
+  scrollbar-width: none !important;
 }
 
 .button-left-nav {
@@ -2522,7 +3132,50 @@ body {
 }
 
 .post:last-child {
+<<<<<<< Updated upstream
   border-bottom: 1px solid rgb(47, 51, 54);
+=======
+  border-bottom: 1px solid rgb(47, 51, 54) !important;
+}
+
+.button-login-hover:hover {
+  background-color: rgba(3, 28, 252, 10%);
+}
+
+.hover\:bg-\[rgba\(231\2c 233\2c 234\2c 0\.1\)\]:hover {
+  background-color: rgba(231,233,234,0.1);
+}
+
+.hover\:bg-gray-900:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity));
+}
+
+.hover\:opacity-80:hover {
+  opacity: 0.8;
+}
+
+.focus\:border-2:focus {
+  border-width: 2px;
+}
+
+.focus\:border-\[\#179BF0\]:focus {
+  --tw-border-opacity: 1;
+  border-color: rgb(23 155 240 / var(--tw-border-opacity));
+}
+
+.active\:border-2:active {
+  border-width: 2px;
+}
+
+.active\:border-\[\#179BF0\]:active {
+  --tw-border-opacity: 1;
+  border-color: rgb(23 155 240 / var(--tw-border-opacity));
+}
+
+.group:hover .group-hover\:bg-\[rgba\(231\2c 233\2c 234\2c 0\.1\)\] {
+  background-color: rgba(231,233,234,0.1);
+>>>>>>> Stashed changes
 }
 
 .hover\:bg-\[rgba\(231\2c 233\2c 234\2c 0\.1\)\]:hover {
@@ -2572,10 +3225,48 @@ body {
     top: -5rem;
   }
 
+<<<<<<< Updated upstream
+=======
+  .md\:-ml-10 {
+    margin-left: -2.5rem;
+  }
+
+>>>>>>> Stashed changes
   .md\:ml-0 {
     margin-left: 0px;
   }
 
+<<<<<<< Updated upstream
+=======
+  .md\:-ml-40 {
+    margin-left: -10rem;
+  }
+
+  .md\:-ml-20 {
+    margin-left: -5rem;
+  }
+
+  .md\:-ml-12 {
+    margin-left: -3rem;
+  }
+
+  .md\:-ml-16 {
+    margin-left: -4rem;
+  }
+
+  .md\:-ml-14 {
+    margin-left: -3.5rem;
+  }
+
+  .md\:-ml-11 {
+    margin-left: -2.75rem;
+  }
+
+  .md\:-ml-9 {
+    margin-left: -2.25rem;
+  }
+
+>>>>>>> Stashed changes
   .md\:block {
     display: block;
   }
@@ -2584,6 +3275,13 @@ body {
     display: flex;
   }
 
+<<<<<<< Updated upstream
+=======
+  .md\:hidden {
+    display: none;
+  }
+
+>>>>>>> Stashed changes
   .md\:h-48 {
     height: 12rem;
   }
@@ -2596,16 +3294,39 @@ body {
     min-height: 78px;
   }
 
-  .md\:w-\[600px\] {
-    width: 600px;
+  .md\:w-1\/2 {
+    width: 50%;
   }
 
   .md\:w-\[133px\] {
     width: 133px;
   }
 
+  .md\:w-\[500px\] {
+    width: 500px;
+  }
+
+  .md\:w-\[600px\] {
+    width: 600px;
+  }
+
+<<<<<<< Updated upstream
+  .md\:w-\[133px\] {
+    width: 133px;
+=======
+  .md\:items-center {
+    align-items: center;
+>>>>>>> Stashed changes
+  }
+
   .md\:px-\[16px\] {
     padding-left: 16px;
     padding-right: 16px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .xl\:block {
+    display: block;
   }
 }
