@@ -18,7 +18,7 @@
     <div class="h-screen text-white hidden md:block">
         <ul class="px-2 py-1 gap-1 flex flex-col w-[275px] relative">
             <div class="fixed">
-                <li class="w-[259px] h-[58px] py-1 flex justify-start group -mt-[6px]">
+            <li class="w-[259px] h-[58px] py-1 flex justify-start group -mt-[6px]">
                     <a href="./index.php">
                         <div
                             class="h-[50.25px] p-3 flex group-hover:bg-[rgba(231,233,234,0.1)] transition-all rounded-full cursor-pointer">
@@ -42,7 +42,7 @@
                                     fill="#fff"></path>
                             </g>
                         </svg>
-                        <div class="pr-4 pl-5 text-xl leading-6"><a href="./index.php">Główna</a></div>
+                        <div class="pr-4 pl-5 text-xl leading-6"><a href="./index.html">Główna</a></div>
                     </div>
                 </li>
                 <li class="w-64 h-14 flex justify-start group ">
@@ -68,7 +68,7 @@
                                     fill="#fff"></path>
                             </g>
                         </svg>
-                        <div class="pr-4 pl-5 text-xl leading-6">Powiadomienia</div>
+                        <div class="pr-4 pl-5 text-xl leading-6"><a href="./lol.html">Powiadomienia</a></div>
                     </div>
                 </li>
                 <li class="w-64 h-14 flex justify-start group -mt-[2px]">
@@ -81,7 +81,7 @@
                                     fill="#fff"></path>
                             </g>
                         </svg>
-                        <div class="pr-4 pl-5 text-xl leading-6">Wiadomości</div>
+                        <div class="pr-4 pl-5 text-xl leading-6"><a href="./lol.html">Wiadomości</a></div>
                     </div>
                 </li>
                 <li class="w-64 h-14 flex justify-start group -mt-[2px]">
@@ -94,7 +94,7 @@
                                     fill="#fff"></path>
                             </g>
                         </svg>
-                        <div class="pr-4 pl-5 text-xl leading-6">Listy</div>
+                        <div class="pr-4 pl-5 text-xl leading-6"><a href="./lol.html">Listy</a></div>
                     </div>
                 </li>
                 <li class="w-64 h-14 flex justify-start group -mt-[2px]">
@@ -107,7 +107,7 @@
                                     fill="#fff"></path>
                             </g>
                         </svg>
-                        <div class="pr-4 pl-5 text-xl leading-6">Zakładki</div>
+                        <div class="pr-4 pl-5 text-xl leading-6"><a href="./lol.html">Zakładki</a></div>
                     </div>
                 </li>
                 <li class="w-64 h-14 flex justify-start group -mt-[2px]">
@@ -120,7 +120,7 @@
                                     fill="#fff"></path>
                             </g>
                         </svg>
-                        <div class="pr-4 pl-5 text-xl leading-6">Premium</div>
+                        <div class="pr-4 pl-5 text-xl leading-6"><a href="./lol.html">Premium</a></div>
                     </div>
                 </li>
                 <li class="w-64 h-14 flex justify-start group -mt-[2px]">
@@ -133,7 +133,7 @@
                                     fill="#fff"></path>
                             </g>
                         </svg>
-                        <div class="pr-4 pl-5 text-xl leading-6"><a href="./profil.html">Profil </a></div>
+                        <div class="pr-4 pl-5 text-xl leading-6"><a href="./profil.php">Profil</a></div>
                     </div>
                 </li>
                 <li class="w-64 h-14 flex justify-start group -mt-[2px]">
@@ -146,7 +146,7 @@
                                     fill="#fff"></path>
                             </g>
                         </svg>
-                        <div class="pr-4 pl-5 text-xl leading-6">Więcej</div>
+                        <div class="pr-4 pl-5 text-xl leading-6"><a href="./lol.html">Więcej</a></div>
                     </div>
                 </li>
                 <li class="flex justify-start">
@@ -215,118 +215,68 @@
         </ul>
     </div>
 
+
     <div class="flex flex-col">
-        <?php
-        if (isset($_GET['u'])) {
-            $usernameURL = urldecode($_GET['u']);
 
-            require_once('../php/Classes/db_connect.php');
-            require_once('../php/Classes/QueryBuilder.php');
-
-            $conn = connectToDatabase();
-
-            $queryBuilder = new SQLQueryBuilder('users', $conn);
-
-            $queryBuilder->addCondition('username', $usernameURL);
-
-            $data = $queryBuilder->executeQuery();
-
-            if (!empty($data)) {
-                foreach ($data as $row) {
-                    $id = $row['id'];
-                    $username = $row['username'];
-                    $displayName = $row['display_name'];
-                    $createdAt = $row['created_at'];
-                }
-            }
-
-            $dateTime = new DateTime($createdAt);
-            $createdAt = $dateTime->format('F Y');
-
-            $conn->close();
-        }
-        ?>
-
-        <!-- PROFIL -->
-        <div class="w-full min-h-20 px-0 md:w-[600px] md:min-h-[78px] post">
-            <div class="bg-slate-600 w-full h md:h-48 h-36"></div>
-            <div class="flex relative justify-between px-[16px] mt-3">
-                <div class="absolute md:-top-20 -top-16">
-                    <img src="https://pbs.twimg.com/profile_images/1452049558935162883/-H6zWFzU_normal.png" alt="avatar"
-                        class="md:w-[133px] md:h-[133px] rounded-full h-[92px] w-[92px] border-4 border-black">
-                </div>
-                <div></div> <!--Edytuj profil jest na koncu -->
-                <button
-                    class="border border-[rgb(83,100,113)] px-4 py-1 rounded-full font-bold transition-all hover:bg-gray-900"
-                    onclick="editProfileModal.showModal()">Edytuj profil</button>
-                    <dialog id="editProfileModal" class="modal">
-                    <div class="modal-box">
-                        <form method="POST" action="../php/actions/ChangeUserName.php">
-                        <h3 class="font-bold text-lg">Edytuj Profil</h3>
-                        <div class="flex flex-col justify-center items-center gap-3">
-                            <img src="https://pbs.twimg.com/profile_images/1452049558935162883/-H6zWFzU_normal.png"
-                                alt="avatar"
-                                class="md:w-[133px] md:h-[133px] rounded-full h-[92px] w-[92px] border border-black">
-                            <input type="hidden" name="id" value="2" />
-                            <input type="text" placeholder="Fivlas" name="username" class="input input-bordered w-full max-w-xs" />
-                            <button class="btn">Zapisz</button>
+        <div class="w-full min-h-20 px-0 md:w-[600px] md:px-[16px] post hidden md:block">
+            <form action="../php/actions/AddPost.php" method="POST">
+                <div class="flex mt-3">
+                    <img src="https://pbs.twimg.com/profile_images/1452049558935162883/-H6zWFzU_normal.png"
+                        class="w-11 h-11 mt-2 rounded-full" alt="">
+                    <div class="ml-3 flex flex-col w-full">
+                        <div>
+                            <input type="text" placeholder="Tytuł" name="title" class="mt-3 w-full bg-black outline-none h-auto" required>
+                            <textarea name="desc" placeholder="Co się dzieje?!"
+                                class=" mt-3 w-full bg-black outline-none min-h-[48px] max-h-96 mb-3" required oninput="autoResizeTextarea(this)"></textarea>
                         </div>
-                        </form>
-                    </div>
-                    <form method="dialog" class="modal-backdrop">
-                        <button>close</button>
-                    </form>
-                </dialog>
-            </div>
-            <div class="relative mt-11 px-[16px]">
-                <div class="flex flex-col mb-3">
-                    <div class="font-bold text-2xl">
-                        <?php echo $displayName ?>
-                    </div>
-                    <div class="text-[#71767b]">
-                        <?php echo $username ?>
-                    </div>
-                    <div class="mt-4 text-[#71767b] flex items-center">
-                        <svg viewBox="0 0 24 24" aria-hidden="true" class="w-[14px] h-[14px]">
-                            <g>
-                                <path
-                                    d="M7 4V3h2v1h6V3h2v1h1.5C19.89 4 21 5.12 21 6.5v12c0 1.38-1.11 2.5-2.5 2.5h-13C4.12 21 3 19.88 3 18.5v-12C3 5.12 4.12 4 5.5 4H7zm0 2H5.5c-.27 0-.5.22-.5.5v12c0 .28.23.5.5.5h13c.28 0 .5-.22.5-.5v-12c0-.28-.22-.5-.5-.5H17v1h-2V6H9v1H7V6zm0 6h2v-2H7v2zm0 4h2v-2H7v2zm4-4h2v-2h-2v2zm0 4h2v-2h-2v2zm4-4h2v-2h-2v2z"
-                                    fill="#71767b"></path>
-                            </g>
-                        </svg>
-                        <span class="pl-1">
-                            <?php echo $createdAt ?>
-                        </span>
+                        <div class="justify-between items-center w-full flex mb-2">
+                            <div>
+                                <input type="text" placeholder="#php" name="tag" class="h-[36px] p-2 rounded-xl">
+                            </div>
+                            <div>
+                                <button
+                                    class="text-center bg-[#1D9BF0]  font-bold px-8 h-[36px] button-left-nav rounded-full cursor-pointer hover:opacity-80 transition-opacity"
+                                    type="submit">Opublikuj
+                                    Wpis</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
-        <!-- PROFIL -->
 
-        <!-- php posty -->
         <?php
+
+        require_once('../php/Classes/db_connect.php');
+        require_once('../php/Classes/QueryBuilder.php');
         require_once('../php/Classes/DataInsert.php');
+        $conn = connectToDatabase();
 
         $itemsPerPage = 5;
-        $currentPage = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         $offset = ($currentPage - 1) * $itemsPerPage;
 
 
         $queryBuilder = new SQLQueryBuilder('posts', $conn);
         $queryBuilder->orderBy('created_at', 'DESC');
-        if (isset($_GET['u'])) {
-            $queryBuilder->addCondition('user_id', $id);
+
+        if(isset($_GET['tag'])) {
+            $tagURL = $_GET['tag'];
+            if ($tagURL) {
+                $queryBuilder->addCondition('tag', $tagURL);
+            }
         }
 
         $queryBuilder->limit($itemsPerPage, $offset);
 
         $data = $queryBuilder->executeQuery();
 
-        if (!empty($data)) {
+        if(!empty($data)) {
             $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
 
-            foreach ($data as $row) {
-                $desc = $row['description'];
+            foreach($data as $row) {
+                $title = $row['title'];
+                $desc = str_replace('\r\n', '<br>', $row['description']);
                 $tag = $row['tag'];
                 $postImg = $row['img'];
                 $createdAt = $row['created_at'];
@@ -337,13 +287,13 @@
                 $queryBuilder->addCondition('id', $userId);
                 $data = $queryBuilder->executeQuery();
 
-                if (!empty($data)) {
-                    foreach ($data as $row) {
+                if(!empty($data)) {
+                    foreach($data as $row) {
                         $username = $row['username'];
                         $displayName = $row['display_name'];
                         $avatar = $row['avatar'];
                     }
-                    if (empty($avatar)) {
+                    if(empty($avatar)) {
                         $avatar = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png";
                     }
 
@@ -352,23 +302,22 @@
 
                     $interval = $createdAt->diff($now);
 
-                    if ($interval->y > 0) {
+                    if($interval->y > 0) {
                         $createdAt = $interval->format('%yl.');
-                    } elseif ($interval->m > 0) {
+                    } elseif($interval->m > 0) {
                         $createdAt = $interval->format('%mm.');
-                    } elseif ($interval->d > 0) {
+                    } elseif($interval->d > 0) {
                         $createdAt = $interval->format('%dd.');
-                    } elseif ($interval->h > 0) {
+                    } elseif($interval->h > 0) {
                         $createdAt = $interval->format('%hg.');
-                    } elseif ($interval->i > 0) {
+                    } elseif($interval->i > 0) {
                         $createdAt = $interval->format('%im.');
                     } else {
                         $createdAt = 'Teraz';
                     }
 
                     if (!function_exists('checkIfTag')) {
-                        function checkIfTag($value, $isLink)
-                        {
+                        function checkIfTag($value, $isLink) {
                             if (!empty($value)) {
                                 if (!$isLink) {
                                     return "#$value";
@@ -381,101 +330,129 @@
                     }
 
                     echo '
-                <div class="w-full min-h-20 px-0 md:w-[600px] md:min-h-[78px] md:px-[16px] post">
-                <div class="flex mt-3 ml-2 md:ml-0">
-                    <a href="./profil.php?u=' . $username . '" class="cursor-pointer">
-                    <img src=' . $avatar . '
-                        class="w-11 h-11 rounded-full" alt="">
-                    </a>
-                    <div class="ml-3 flex flex-col">
-                        <div>
-                            <span class=""><a href="./profil.php?u=' . $username . '" class="cursor-pointer">' . $displayName . '</a></span>
-                            <span class="ml-1">·</span>
-                            <span class=""><a href="./profil.php?u=' . $username . '" class="cursor-pointer">' . $username . '</a></span>
-                            <span class="ml-1">·</span>
-                            <span class="ml-1">' . $createdAt . '</span>
+                        <div class="w-full min-h-20 px-0 md:w-[600px] md:min-h-[78px] md:px-[16px] post">
+                        <div class="flex mt-3 ml-2 md:ml-0">
+                            <a href="./profil.php?u='.$username.'" class="cursor-pointer">
+                            <img src='.$avatar.'
+                                class="w-11 h-11 rounded-full" alt="">
+                            </a>
+                            <div class="ml-3 flex flex-col">
+                                <div>
+                                    <span class=""><a href="./profil.php?u='.$username.'" class="cursor-pointer">'.$displayName.'</a></span>
+                                    <span class="ml-1">·</span>
+                                    <span class=""><a href="./profil.php?u='.$username.'" class="cursor-pointer">'.$username.'</a></span>
+                                    <span class="ml-1">·</span>
+                                    <span class="ml-1">'.$createdAt.'</span>
+                                </div>
+                                <h1 class="font-bold">'.$title.'</h1>
+                                <div class="w-80 md:w-[500px] line-clamp-4">'.$desc.'</div>
+                                <span class="mt-[22px] text-blue-400 cursor-pointer"><a href="?tag='.checkIfTag($tag, true).'">'.checkIfTag($tag, false).'</a></span>
+                                <div class="flex gap-16 justify-evenly w-full mb-[8px] mt-[13px]">
+                                    <div class="flex items-center">
+                                        <svg viewBox="0 0 24 24" aria-hidden="true" class="h-[18.75px] w-[18.75px]">
+                                            <g>
+                                                <path
+                                                    d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 8.129 3.64 8.129 8.13 0 2.96-1.607 5.68-4.196 7.11l-8.054 4.46v-3.69h-.067c-4.49.1-8.183-3.51-8.183-8.01zm8.005-6c-3.317 0-6.005 2.69-6.005 6 0 3.37 2.77 6.08 6.138 6.01l.351-.01h1.761v2.3l5.087-2.81c1.951-1.08 3.163-3.13 3.163-5.36 0-3.39-2.744-6.13-6.129-6.13H9.756z"
+                                                    fill="#fff"></path>
+                                            </g>
+                                        </svg>
+                                        <span class="ml-1">10</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <svg viewBox="0 0 24 24" aria-hidden="true" class="h-[18.75px] w-[18.75px]">
+                                            <g>
+                                                <path
+                                                    d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 8.129 3.64 8.129 8.13 0 2.96-1.607 5.68-4.196 7.11l-8.054 4.46v-3.69h-.067c-4.49.1-8.183-3.51-8.183-8.01zm8.005-6c-3.317 0-6.005 2.69-6.005 6 0 3.37 2.77 6.08 6.138 6.01l.351-.01h1.761v2.3l5.087-2.81c1.951-1.08 3.163-3.13 3.163-5.36 0-3.39-2.744-6.13-6.129-6.13H9.756z"
+                                                    fill="#fff"></path>
+                                            </g>
+                                        </svg>
+                                        <span class="ml-1">10</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <svg viewBox="0 0 24 24" aria-hidden="true" class="h-[18.75px] w-[18.75px]">
+                                            <g>
+                                                <path
+                                                    d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 8.129 3.64 8.129 8.13 0 2.96-1.607 5.68-4.196 7.11l-8.054 4.46v-3.69h-.067c-4.49.1-8.183-3.51-8.183-8.01zm8.005-6c-3.317 0-6.005 2.69-6.005 6 0 3.37 2.77 6.08 6.138 6.01l.351-.01h1.761v2.3l5.087-2.81c1.951-1.08 3.163-3.13 3.163-5.36 0-3.39-2.744-6.13-6.129-6.13H9.756z"
+                                                    fill="#fff"></path>
+                                            </g>
+                                        </svg>
+                                        <span class="ml-1">10</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="w-80 md:w-[500px] line-clamp-4">' . $desc . '</div>
-                        <span class="mt-[22px] text-blue-400 cursor-pointer"><a href="index.php?tag=' . checkIfTag($tag, true) . '">' . checkIfTag($tag, false) . '</a></span>
-                        <div class="flex gap-16 justify-evenly w-full mb-[8px] mt-[13px]">
-                            <div class="flex items-center">
-                                <svg viewBox="0 0 24 24" aria-hidden="true" class="h-[18.75px] w-[18.75px]">
-                                    <g>
-                                        <path
-                                            d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 8.129 3.64 8.129 8.13 0 2.96-1.607 5.68-4.196 7.11l-8.054 4.46v-3.69h-.067c-4.49.1-8.183-3.51-8.183-8.01zm8.005-6c-3.317 0-6.005 2.69-6.005 6 0 3.37 2.77 6.08 6.138 6.01l.351-.01h1.761v2.3l5.087-2.81c1.951-1.08 3.163-3.13 3.163-5.36 0-3.39-2.744-6.13-6.129-6.13H9.756z"
-                                            fill="#fff"></path>
-                                    </g>
-                                </svg>
-                                <span class="ml-1">10</span>
-                            </div>
-                            <div class="flex items-center">
-                                <svg viewBox="0 0 24 24" aria-hidden="true" class="h-[18.75px] w-[18.75px]">
-                                    <g>
-                                        <path
-                                            d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 8.129 3.64 8.129 8.13 0 2.96-1.607 5.68-4.196 7.11l-8.054 4.46v-3.69h-.067c-4.49.1-8.183-3.51-8.183-8.01zm8.005-6c-3.317 0-6.005 2.69-6.005 6 0 3.37 2.77 6.08 6.138 6.01l.351-.01h1.761v2.3l5.087-2.81c1.951-1.08 3.163-3.13 3.163-5.36 0-3.39-2.744-6.13-6.129-6.13H9.756z"
-                                            fill="#fff"></path>
-                                    </g>
-                                </svg>
-                                <span class="ml-1">10</span>
-                            </div>
-                            <div class="flex items-center">
-                                <svg viewBox="0 0 24 24" aria-hidden="true" class="h-[18.75px] w-[18.75px]">
-                                    <g>
-                                        <path
-                                            d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 8.129 3.64 8.129 8.13 0 2.96-1.607 5.68-4.196 7.11l-8.054 4.46v-3.69h-.067c-4.49.1-8.183-3.51-8.183-8.01zm8.005-6c-3.317 0-6.005 2.69-6.005 6 0 3.37 2.77 6.08 6.138 6.01l.351-.01h1.761v2.3l5.087-2.81c1.951-1.08 3.163-3.13 3.163-5.36 0-3.39-2.744-6.13-6.129-6.13H9.756z"
-                                            fill="#fff"></path>
-                                    </g>
-                                </svg>
-                                <span class="ml-1">10</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>';
+                    </div>';
                 }
             }
         }
 
-        $queryBuilder = new SQLQueryBuilder('posts', $conn);
-        $count = $queryBuilder->count();
 
+        $queryBuilder = new SQLQueryBuilder('posts', $conn);
+        if(isset($_GET['tag'])) {
+            if ($_GET['tag']) {
+                $tagURL = $_GET['tag'];
+                $condition = "tag = '$tagURL'";
+                $count = $queryBuilder->count($condition);
+            }
+        } else {
+            $count = $queryBuilder->count();
+        }
+
+        if (isset($_GET['page'])) {
+            $maxPages = round($count / 5) * 5 / 5;
+            if ($_GET['page'] > $maxPages) {
+                echo "<p class='text-center mt-4'>Czego tu szukasz?</p>";
+            }
+        }
 
         $conn->close();
         ?>
 
+        <!-- Pagination -->
         <div class="flex flex-col justify-center my-3 mx-auto">
             <div class="join">
                 <button class="join-item btn" onclick="decrementPage()">«</button>
-                <button class="join-item btn">Strona
-                    <?php echo $currentPage ?>
-                </button>
+                <a href="index.php">
+                    <button class="join-item btn">Strona
+                        <?php echo $currentPage ?>
+                    </button>
+                </a>
                 <button class="join-item btn" onclick="incrementPage(<?php echo $count ?>)">»</button>
             </div>
             <?php
-            if (isset($_GET['tag'])) {
-                echo '<button class="btn justify-center mt-4" onclick="clearTag()">Wyczyść tag</button>';
+            if(isset($_GET['tag'])) {
+                if ($_GET['tag']) {
+                    echo '<button class="btn justify-center mt-4" onclick="clearTag()">Wyczyść tag</button>';
+                }
             }
             ?>
         </div>
 
-
     </div>
-
     <div class="md:flex flex-col hidden gap-4 ml-[30px]">
         <aside class="w-[350px] h-[165px] bg-[#16181c]"></aside>
         <aside class="w-[350px] h-[165px] bg-[#16181c]"></aside>
         <aside class="w-[350px] h-[165px] bg-[#16181c]"></aside>
     </div>
-<<<<<<< Updated upstream
-=======
     <script>
+        function autoResizeTextarea(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = (textarea.scrollHeight) + 'px';
+        }
 
         var postElements = document.getElementsByClassName("post");
 
         if (postElements.length > 0) {
             postElements[postElements.length - 1].removeAttribute("style");
-
+        
             postElements[postElements.length - 1].style.borderBottom = "1px solid rgb(47, 51, 54)";
+        }
+
+        const clearTag = () => {
+            var urlParams = new URLSearchParams(window.location.search);
+            urlParams.delete("tag");
+            var updatedUrl = window.location.origin + window.location.pathname + '?' + urlParams.toString();
+            window.location.href = updatedUrl;
         }
 
         const roundToMultipleOf5 = (number) => {
@@ -509,7 +486,6 @@
 
         }
     </script>
->>>>>>> Stashed changes
 </body>
 
 </html>
