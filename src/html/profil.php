@@ -1,3 +1,9 @@
+<?php
+session_start();
+if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
+    header('location: login.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="pl">
 
@@ -30,9 +36,27 @@
                                 </g>
                             </svg>
                         </div>
-                    <a/>
+                        <a />
                 </li>
-                <li class="w-[259px] h-[58px] py-1 flex justify-start group -mt-[7px]">
+                <?php
+                if ($_SESSION['isAdmin']) {
+                    echo '
+                    <li class="w-[259px] h-[58px] py-1 flex justify-start group -mt-[6px]">
+                        <label for="adminMode">
+                            <div
+                                class="h-[50.25px] p-3 flex group-hover:bg-[rgba(231,233,234,0.1)] transition-all rounded-full cursor-pointer">
+                                Admin Mode
+                                <input type="checkbox" class="ml-3 toggle" name="adminMode" id="adminMode" onchange="adminModeCheckbox()"';
+                    if (isset($_GET['admin']) && $_GET['admin'] == "true" && isset($_GET['admin'])) {
+                        echo "checked";
+                    }
+                    echo '
+                            </div>
+                        <label/>
+                    </li>';
+                }
+                ?>
+                <li class="w-[259px] h-[58px] py-1 flex justify-start group -mt-[2px]">
                     <div
                         class="h-[50.25px] p-3 flex group-hover:bg-[rgba(231,233,234,0.1)] transition-all rounded-full cursor-pointer">
                         <svg viewBox="0 0 24 24" aria-hidden="true" class="svg">
@@ -133,7 +157,7 @@
                                     fill="#fff"></path>
                             </g>
                         </svg>
-                        <div class="pr-4 pl-5 text-xl leading-6"><a href="./profil.html">Profil </a></div>
+                        <div class="pr-4 pl-5 text-xl leading-6"><a href="./profil.php">Profil </a></div>
                     </div>
                 </li>
                 <li class="w-64 h-14 flex justify-start group -mt-[2px]">
@@ -154,30 +178,6 @@
                         class="text-center bg-[#1D9BF0] w-[233px] mt-[10px] font-bold px-8 h-[52px] button-left-nav rounded-full cursor-pointer hover:opacity-80 transition-opacity">
                         Opublikuj Wpis
                     </button>
-                    <dialog id="addTweetModal" class="modal min-h-[220px]">
-                        <div class="modal-box flex flex-col bg-black border border-white w-full">
-                            <div class="flex">
-                                <img src="https://pbs.twimg.com/profile_images/1452049558935162883/-H6zWFzU_normal.png"
-                                    class="w-11 h-11 rounded-full mr-3 pt-3" alt="">
-                                <textarea name="" placeholder="Co się dzieje?!"
-                                    class="min-h-24 h-24 resize-none mt-3 w-full bg-black outline-none"></textarea>
-                            </div>
-                            <hr class="mt-1">
-                            <div class="justify-between items-center w-full flex">
-                                <div>
-                                    <input type="text" placeholder="#php" class="h-[36px] p-2 rounded-xl mt-[10px]">
-                                </div>
-                                <div>
-                                    <button
-                                        class="text-center bg-[#1D9BF0] mt-[10px] font-bold px-8 h-[36px] button-left-nav rounded-full cursor-pointer hover:opacity-80 transition-opacity">Opublikuj
-                                        Wpis</button>
-                                </div>
-                            </div>
-                        </div>
-                        <form method="dialog" class="modal-backdrop">
-                            <button>close</button>
-                        </form>
-                    </dialog>
                 </li>
                 <div class="dropdown dropdown-top h-screen w-full">
                     <div class="relative">
@@ -185,11 +185,44 @@
                             <li role="button" tabindex="0"
                                 class="flex items-center w-[150%] my-3 p-3 h-16 hover:bg-[rgba(231,233,234,0.1)] transition-all rounded-full cursor-pointer button-left-nav">
                                 <div class="flex w-full">
-                                    <img src="https://pbs.twimg.com/profile_images/1452049558935162883/-H6zWFzU_normal.png"
+                                        <?php
+                                        require_once('../php/Classes/db_connect.php');
+                                        require_once('../php/Classes/QueryBuilder.php');
+                                        require_once('../php/Classes/DataInsert.php');
+                                        $conn = connectToDatabase();
+
+                                        $username = $_SESSION['username'];
+                                        $id = $_SESSION['id'];
+
+                                        $queryBuilder = new SQLQueryBuilder('users', $conn);
+
+                                        $queryBuilder->addCondition('id', $id);
+
+                                        $userData = $queryBuilder->executeQuery();
+
+                                        if (!empty($userData)) {
+                                            foreach ($userData as $row) {
+                                                $userUsername = $row['username'];
+                                                $userDisplayName = $row['display_name'];
+                                                $userAvatar = $row['avatar'];
+                                            }
+                                        }
+
+                                        if(empty($userAvatar)) {
+                                            $userAvatar = "../asset/img/blank.png";
+                                        } else {
+                                            $userAvatar = "../php/uploads/".$userAvatar;
+                                        }
+                                        ?>
+                                    <img src=<?php echo $userAvatar?>
                                         class="w-11 h-11 rounded-full" alt="">
                                     <div class="flex flex-col text-[15px] w-[74px] h-[41px] justify-start px-2">
-                                        <span>Fivlas</span>
-                                        <span class="text-[#71767B]">@fivlas</span>
+                                        <span>
+                                            <?php echo $userDisplayName ?>
+                                        </span>
+                                        <span class="text-[#71767B]">
+                                            <?php echo $userUsername; ?>
+                                        </span>
                                     </div>
                                     <div class="flex items-center w-full justify-end">
                                         <svg viewBox="0 0 24 24" aria-hidden="true" class="svg">
@@ -207,7 +240,9 @@
                     <div class="flex justify-center">
                         <ul
                             class="dropdown-content z-[1] menu p-2 shadow bg-black dropdown-shadow rounded-box w-[110%]">
-                            <li><a class="px-4 py-3">Wyloguj się z konta @fivlas</a></li>
+                            <li><a href="../php/actions/logout.php" class="px-4 py-3">Wyloguj się z konta
+                                    <?php echo $userUsername; ?>
+                                </a></li>
                         </ul>
                     </div>
                 </div>
@@ -215,36 +250,64 @@
         </ul>
     </div>
 
+    <dialog id="addTweetModal" class="modal min-h-[220px]">
+        <div class="modal-box flex flex-col bg-black border border-white w-full">
+            <form action="../php/actions/AddPost.php" method="POST" enctype="multipart/form-data">
+                <div class="flex flex-col">
+                    <img src=<?php echo $userAvatar?>
+                        class="w-11 rounded-full mr-3" alt="">
+                    <input type="text" placeholder="Tytuł" name="title" class="mt-3 w-full bg-black outline-none h-auto"
+                        required>
+                    <textarea name="desc" placeholder="Co się dzieje?!"
+                        class="min-h-24 h-24 resize-none mt-3 w-full bg-black outline-none" required
+                        oninput="autoResizeTextarea(this)"></textarea>
+                    <input type="file" name="avatar" id="avatar" accept="image/*" class="mx-auto mt-3 file-input file-input-bordered w-full max-w-xs" />
+                    <p class="text-center text-xs my-2">zdjęcie opcjonale</p>
+                </div>
+                <hr class="mt-1">
+                <div class="justify-between items-center w-full flex">
+                    <div>
+                        <input type="text" placeholder="#php" name="tag" class="h-[36px] p-2 rounded-xl mt-[10px]">
+                    </div>
+                    <div>
+                        <button
+                            class="text-center bg-[#1D9BF0] mt-[10px] font-bold px-8 h-[36px] button-left-nav rounded-full cursor-pointer hover:opacity-80 transition-opacity">Opublikuj
+                            Wpis</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <form method="dialog" class="modal-backdrop">
+            <button>close</button>
+        </form>
+    </dialog>
+
     <div class="flex flex-col">
         <?php
         if (isset($_GET['u'])) {
             $usernameURL = urldecode($_GET['u']);
-
-            require_once('../php/Classes/db_connect.php');
-            require_once('../php/Classes/QueryBuilder.php');
-
-            $conn = connectToDatabase();
-
-            $queryBuilder = new SQLQueryBuilder('users', $conn);
-
-            $queryBuilder->addCondition('username', $usernameURL);
-
-            $data = $queryBuilder->executeQuery();
-
-            if (!empty($data)) {
-                foreach ($data as $row) {
-                    $id = $row['id'];
-                    $username = $row['username'];
-                    $displayName = $row['display_name'];
-                    $createdAt = $row['created_at'];
-                }
-            }
-
-            $dateTime = new DateTime($createdAt);
-            $createdAt = $dateTime->format('F Y');
-
-            $conn->close();
+        } else {
+            $usernameURL = $_SESSION['username'];
         }
+
+        $queryBuilder = new SQLQueryBuilder('users', $conn);
+
+        $queryBuilder->addCondition('username', $usernameURL);
+
+        $data = $queryBuilder->executeQuery();
+
+        if (!empty($data)) {
+            foreach ($data as $row) {
+                $id = $row['id'];
+                $username = $row['username'];
+                $displayName = $row['display_name'];
+                $createdAt = $row['created_at'];
+            }
+        }
+
+        $dateTime = new DateTime($createdAt);
+        $createdAt = $dateTime->format('F Y');
+
         ?>
 
         <!-- PROFIL -->
@@ -252,25 +315,37 @@
             <div class="bg-slate-600 w-full h md:h-48 h-36"></div>
             <div class="flex relative justify-between px-[16px] mt-3">
                 <div class="absolute md:-top-20 -top-16">
-                    <img src="https://pbs.twimg.com/profile_images/1452049558935162883/-H6zWFzU_normal.png" alt="avatar"
+                    <img src=<?php echo $userAvatar?> alt="avatar"
                         class="md:w-[133px] md:h-[133px] rounded-full h-[92px] w-[92px] border-4 border-black">
                 </div>
                 <div></div> <!--Edytuj profil jest na koncu -->
-                <button
-                    class="border border-[rgb(83,100,113)] px-4 py-1 rounded-full font-bold transition-all hover:bg-gray-900"
-                    onclick="editProfileModal.showModal()">Edytuj profil</button>
-                    <dialog id="editProfileModal" class="modal">
+                <?php
+                if (!isset($_GET['u']) || $_GET['u'] == $_SESSION['username']) {
+                    echo '<button class="border border-[rgb(83,100,113)] px-4 py-1 rounded-full font-bold transition-all hover:bg-gray-900" onclick="editProfileModal.showModal()">Edytuj profil </button>';
+                } else {
+                    echo '<button class="border border-[rgb(83,100,113)] px-4 py-1 rounded-full font-bold transition-all hover:bg-gray-900 invisible" >Edytuj profil </button>';
+                }
+
+                ?>
+                <dialog id="editProfileModal" class="modal">
                     <div class="modal-box">
-                        <form method="POST" action="../php/actions/ChangeUserName.php">
-                        <h3 class="font-bold text-lg">Edytuj Profil</h3>
-                        <div class="flex flex-col justify-center items-center gap-3">
-                            <img src="https://pbs.twimg.com/profile_images/1452049558935162883/-H6zWFzU_normal.png"
-                                alt="avatar"
-                                class="md:w-[133px] md:h-[133px] rounded-full h-[92px] w-[92px] border border-black">
-                            <input type="hidden" name="id" value="2" />
-                            <input type="text" placeholder="Fivlas" name="username" class="input input-bordered w-full max-w-xs" />
-                            <button class="btn">Zapisz</button>
-                        </div>
+                        <form method="POST" action="../php/actions/ChangeUserName.php" enctype="multipart/form-data">
+                            <h3 class="font-bold text-lg">Edytuj Profil</h3>
+                            <div class="flex flex-col justify-center items-center gap-3">
+                                <img src=<?php echo $userAvatar?>
+                                    alt="avatar"
+                                    class="md:w-[133px] md:h-[133px] rounded-full h-[92px] w-[92px] border border-black">
+                                <input type="hidden" name="id" value="2" />
+                                <input type="text" placeholder=<?php echo $userDisplayName ?> name="username"
+                                    class="input input-bordered w-full max-w-xs" />
+                                <input type="file" name="avatar" id="avatar" accept="image/*" class="mt-4 file-input file-input-bordered w-full max-w-xs" />
+                                <?php
+                                    if (isset($_GET['error'])) {
+                                        echo '<span class="text-red-500 text-center mt-2">'.$_GET['error'].'</span>';
+                                    }
+                                ?>
+                                <button class="btn">Zapisz</button>
+                            </div>
                         </form>
                     </div>
                     <form method="dialog" class="modal-backdrop">
@@ -280,7 +355,7 @@
             </div>
             <div class="relative mt-11 px-[16px]">
                 <div class="flex flex-col mb-3">
-                    <div class="font-bold text-2xl">
+                    <div class="font-bold text-2xl mt-2">
                         <?php echo $displayName ?>
                     </div>
                     <div class="text-[#71767b]">
@@ -316,6 +391,8 @@
         $queryBuilder->orderBy('created_at', 'DESC');
         if (isset($_GET['u'])) {
             $queryBuilder->addCondition('user_id', $id);
+        } else {
+            $queryBuilder->addCondition('user_id', $_SESSION['id']);
         }
 
         $queryBuilder->limit($itemsPerPage, $offset);
@@ -326,7 +403,9 @@
             $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
 
             foreach ($data as $row) {
-                $desc = $row['description'];
+                $postId = $row['id'];
+                $title = $row['title'];
+                $desc = str_replace('\r\n', '<br>', $row['description']);
                 $tag = $row['tag'];
                 $postImg = $row['img'];
                 $createdAt = $row['created_at'];
@@ -343,8 +422,11 @@
                         $displayName = $row['display_name'];
                         $avatar = $row['avatar'];
                     }
-                    if (empty($avatar)) {
-                        $avatar = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png";
+
+                    if(empty($avatar)) {
+                        $avatar = "../asset/img/blank.png";
+                    } else {
+                        $avatar = "../php/uploads/".$avatar;
                     }
 
                     $createdAt = new DateTime($createdAt);
@@ -381,74 +463,66 @@
                     }
 
                     echo '
-                <div class="w-full min-h-20 px-0 md:w-[600px] md:min-h-[78px] md:px-[16px] post">
-                <div class="flex mt-3 ml-2 md:ml-0">
-                    <a href="./profil.php?u=' . $username . '" class="cursor-pointer">
-                    <img src=' . $avatar . '
-                        class="w-11 h-11 rounded-full" alt="">
-                    </a>
-                    <div class="ml-3 flex flex-col">
-                        <div>
-                            <span class=""><a href="./profil.php?u=' . $username . '" class="cursor-pointer">' . $displayName . '</a></span>
-                            <span class="ml-1">·</span>
-                            <span class=""><a href="./profil.php?u=' . $username . '" class="cursor-pointer">' . $username . '</a></span>
-                            <span class="ml-1">·</span>
-                            <span class="ml-1">' . $createdAt . '</span>
+                    <div class="w-full min-h-20 px-0 md:w-[600px] md:min-h-[78px] md:px-[16px] post">
+                    <div class="flex mt-3 ml-2 md:ml-0">
+                        <a href="./profil.php?u=' . $username . '" class="cursor-pointer">
+                        <img src=' . $avatar . '
+                            class="w-11 h-11 rounded-full" alt="">
+                        </a>
+                        <div class="ml-3 flex flex-col">
+                            <div>
+                                <span class=""><a href="./profil.php?u=' . $username . '" class="cursor-pointer">' . $displayName . '</a></span>
+                                <span class="ml-1">·</span>
+                                <span class=""><a href="./profil.php?u=' . $username . '" class="cursor-pointer">' . $username . '</a></span>
+                                <span class="ml-1">·</span>
+                                <span class="ml-1">' . $createdAt . '</span>
+                            </div>
+                            <h1 class="font-bold cursor-pointer" onClick="moveToComments('.$postId.')">'.$title.'</h1>
+                            <div class="w-80 md:w-[500px] line-clamp-4 cursor-pointer" onClick="moveToComments('.$postId.')">'.$desc.'</div>
+                            <span class="mt-[22px] text-blue-400 cursor-pointer"><a href="?tag=' . checkIfTag($tag, true) . '">' . checkIfTag($tag, false) . '</a></span>';
+                            if (!empty($postImg)) {
+                                $postImg = "../php/uploads/".$postImg;
+                                echo "<img class='scale-img cursor-pointer mb-2' src='$postImg'>";
+                            }
+
+                    if (($_SESSION['isAdmin'] && isset($_GET['admin']) && $_GET['admin'] === "true") || $_SESSION['id'] == $userId) {
+                        echo "<a href='../php/actions/deletePost.php?id=$postId&author=$userId' class='px-4 py-2 bg-red-500 rounded-full my-3 w-1/2 mx-auto hover:opacity-80 transition-all text-center font-bold cursor-pointer'>Usuń Post</a>";
+                    }
+
+                    echo '</div>
                         </div>
-                        <div class="w-80 md:w-[500px] line-clamp-4">' . $desc . '</div>
-                        <span class="mt-[22px] text-blue-400 cursor-pointer"><a href="index.php?tag=' . checkIfTag($tag, true) . '">' . checkIfTag($tag, false) . '</a></span>
-                        <div class="flex gap-16 justify-evenly w-full mb-[8px] mt-[13px]">
-                            <div class="flex items-center">
-                                <svg viewBox="0 0 24 24" aria-hidden="true" class="h-[18.75px] w-[18.75px]">
-                                    <g>
-                                        <path
-                                            d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 8.129 3.64 8.129 8.13 0 2.96-1.607 5.68-4.196 7.11l-8.054 4.46v-3.69h-.067c-4.49.1-8.183-3.51-8.183-8.01zm8.005-6c-3.317 0-6.005 2.69-6.005 6 0 3.37 2.77 6.08 6.138 6.01l.351-.01h1.761v2.3l5.087-2.81c1.951-1.08 3.163-3.13 3.163-5.36 0-3.39-2.744-6.13-6.129-6.13H9.756z"
-                                            fill="#fff"></path>
-                                    </g>
-                                </svg>
-                                <span class="ml-1">10</span>
-                            </div>
-                            <div class="flex items-center">
-                                <svg viewBox="0 0 24 24" aria-hidden="true" class="h-[18.75px] w-[18.75px]">
-                                    <g>
-                                        <path
-                                            d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 8.129 3.64 8.129 8.13 0 2.96-1.607 5.68-4.196 7.11l-8.054 4.46v-3.69h-.067c-4.49.1-8.183-3.51-8.183-8.01zm8.005-6c-3.317 0-6.005 2.69-6.005 6 0 3.37 2.77 6.08 6.138 6.01l.351-.01h1.761v2.3l5.087-2.81c1.951-1.08 3.163-3.13 3.163-5.36 0-3.39-2.744-6.13-6.129-6.13H9.756z"
-                                            fill="#fff"></path>
-                                    </g>
-                                </svg>
-                                <span class="ml-1">10</span>
-                            </div>
-                            <div class="flex items-center">
-                                <svg viewBox="0 0 24 24" aria-hidden="true" class="h-[18.75px] w-[18.75px]">
-                                    <g>
-                                        <path
-                                            d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 8.129 3.64 8.129 8.13 0 2.96-1.607 5.68-4.196 7.11l-8.054 4.46v-3.69h-.067c-4.49.1-8.183-3.51-8.183-8.01zm8.005-6c-3.317 0-6.005 2.69-6.005 6 0 3.37 2.77 6.08 6.138 6.01l.351-.01h1.761v2.3l5.087-2.81c1.951-1.08 3.163-3.13 3.163-5.36 0-3.39-2.744-6.13-6.129-6.13H9.756z"
-                                            fill="#fff"></path>
-                                    </g>
-                                </svg>
-                                <span class="ml-1">10</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>';
+                    </div>';
                 }
             }
         }
 
         $queryBuilder = new SQLQueryBuilder('posts', $conn);
-        $count = $queryBuilder->count();
+        $condition = "user_id = $id";
+        $count = $queryBuilder->count($condition);
 
+        if (isset($_GET['page'])) {
+            $maxPages = round($count / 5) * 5 / 5;
+            if ($_GET['page'] > $maxPages) {
+                echo "<p class='text-center mt-4'>Czego tu szukasz?</p>";
+            }
+        }
 
-        $conn->close();
         ?>
 
         <div class="flex flex-col justify-center my-3 mx-auto">
             <div class="join">
                 <button class="join-item btn" onclick="decrementPage()">«</button>
-                <button class="join-item btn">Strona
-                    <?php echo $currentPage ?>
-                </button>
+                <a href=<?php
+                if (isset($_GET['u'])) {
+                    echo "profil.php?u=" . $_GET['u'];
+                } else {
+                    echo "profil.php";
+                }
+                ?>>
+                    <button class="join-item btn">Strona
+                        <?php echo $currentPage ?>
+                    </button>
+                </a>
                 <button class="join-item btn" onclick="incrementPage(<?php echo $count ?>)">»</button>
             </div>
             <?php
@@ -462,54 +536,33 @@
     </div>
 
     <div class="md:flex flex-col hidden gap-4 ml-[30px]">
-        <aside class="w-[350px] h-[165px] bg-[#16181c]"></aside>
-        <aside class="w-[350px] h-[165px] bg-[#16181c]"></aside>
-        <aside class="w-[350px] h-[165px] bg-[#16181c]"></aside>
+        <!-- <aside class="w-[350px] h-[165px] bg-[#16181c]"></aside> -->
+        <aside class="w-[350px] bg-[#16181c] rounded-xl mt-[60px]">
+            <div class="flex flex-col gap-1">
+                <h2 class="text-[20px] font-bold px-4 py-3">Najpopularniejsze Tagi</h2>
+                <?php
+                    require_once('../php/Classes/CountTop.php');
+                    $topElements = getTopElementsWithHighestCount($conn, 'posts', 'tag');
+                    $conn->close();
+                    foreach ($topElements as $row) {
+                        $tag = $row['tag'];
+                        $count = $row['count'];
+
+                        echo "
+                        <div>
+                            <a href='index.php?tag=$tag'>
+                                <div class='w-full h-[86px] px-4 hover:opacity-80 transition-all'>
+                                    <p class='text-[15px] font-bold pt-[15px] text-[#e7e9ea]'>$tag</p>
+                                    <p class='mt-[5px] text-[13px] text-[#71767b]'>$count postów</p>
+                                </div>
+                            </a>
+                        </div>
+                        ";
+                    }
+                ?>
+        </aside>
     </div>
-<<<<<<< Updated upstream
-=======
-    <script>
-
-        var postElements = document.getElementsByClassName("post");
-
-        if (postElements.length > 0) {
-            postElements[postElements.length - 1].removeAttribute("style");
-
-            postElements[postElements.length - 1].style.borderBottom = "1px solid rgb(47, 51, 54)";
-        }
-
-        const roundToMultipleOf5 = (number) => {
-            return Math.round(number / 5) * 5 / 5;
-        }
-
-        const incrementPage = (count) => {
-            var url = new URL(window.location.href);
-
-            var currentPage = parseInt(url.searchParams.get('page')) || 1;
-
-            if (currentPage < roundToMultipleOf5(count)) {
-                var nextPage = currentPage + 1;
-                url.searchParams.set('page', nextPage);
-                window.location.href = url.toString();
-            }
-
-        }
-
-        const decrementPage = () => {
-            var url = new URL(window.location.href);
-
-            var currentPage = parseInt(url.searchParams.get('page')) || 1;
-
-            if (currentPage > 1) {
-                var nextPage = currentPage - 1;
-                url.searchParams.set('page', nextPage);
-
-                window.location.href = url.toString();
-            }
-
-        }
-    </script>
->>>>>>> Stashed changes
+    <script src='./script.js'></script>
 </body>
 
 </html>

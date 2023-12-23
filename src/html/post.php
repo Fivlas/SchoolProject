@@ -1,8 +1,8 @@
 <?php
-    session_start();
-    if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
-        header('location: login.php');
-    }
+session_start();
+if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
+    header('location: login.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -27,16 +27,16 @@
                 <li class="w-[259px] h-[58px] py-1 flex justify-start group -mt-[6px]">
                     <a href="./index.php">
                         <div
-                        class="h-[50.25px] p-3 flex group-hover:bg-[rgba(231,233,234,0.1)] transition-all rounded-full cursor-pointer">
-                        <svg viewBox="0 0 24 24" aria-hidden="true" class="svg">
-                            <g>
-                                <path
-                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
-                                fill="#fff"></path>
-                            </g>
-                        </svg>
-                    </div>
-                    <a/>
+                            class="h-[50.25px] p-3 flex group-hover:bg-[rgba(231,233,234,0.1)] transition-all rounded-full cursor-pointer">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" class="svg">
+                                <g>
+                                    <path
+                                        d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+                                        fill="#fff"></path>
+                                </g>
+                            </svg>
+                        </div>
+                        <a />
                 </li>
                 <?php
                 if ($_SESSION['isAdmin']) {
@@ -47,10 +47,10 @@
                                 class="h-[50.25px] p-3 flex group-hover:bg-[rgba(231,233,234,0.1)] transition-all rounded-full cursor-pointer">
                                 Admin Mode
                                 <input type="checkbox" class="ml-3 toggle" name="adminMode" id="adminMode" onchange="adminModeCheckbox()"';
-                                if (isset($_GET['admin']) && $_GET['admin'] == "true" && isset($_GET['admin'])) {
-                                    echo "checked";
-                                }
-                        echo '
+                    if (isset($_GET['admin']) && $_GET['admin'] == "true" && isset($_GET['admin'])) {
+                        echo "checked";
+                    }
+                    echo '
                             </div>
                         <label/>
                     </li>';
@@ -186,40 +186,43 @@
                                 class="flex items-center w-[150%] my-3 p-3 h-16 hover:bg-[rgba(231,233,234,0.1)] transition-all rounded-full cursor-pointer button-left-nav">
                                 <div class="flex w-full">
                                         <?php
-                                            require_once('../php/Classes/db_connect.php');
-                                            require_once('../php/Classes/QueryBuilder.php');
-                                            require_once('../php/Classes/DataInsert.php');
-                                            $conn = connectToDatabase();
+                                        require_once('../php/Classes/db_connect.php');
+                                        require_once('../php/Classes/QueryBuilder.php');
+                                        require_once('../php/Classes/DataInsert.php');
+                                        $conn = connectToDatabase();
 
-                                            $username = $_SESSION['username'];
-                                            $id = $_SESSION['id'];
+                                        $username = $_SESSION['username'];
+                                        $id = $_SESSION['id'];
 
-                                            $queryBuilder = new SQLQueryBuilder('users', $conn);
-                                
-                                            $queryBuilder->addCondition('id', $id);
-                                
-                                            $userData = $queryBuilder->executeQuery();
-                                
-                                            if (!empty($userData)) {
-                                                foreach ($userData as $row) {
-                                                    $userUsername = $row['username'];
-                                                    $userDisplayName = $row['display_name'];
-                                                    $userAvatar = $row['avatar'];
-                                                }
+                                        $queryBuilder = new SQLQueryBuilder('users', $conn);
+
+                                        $queryBuilder->addCondition('id', $id);
+
+                                        $userData = $queryBuilder->executeQuery();
+
+                                        if (!empty($userData)) {
+                                            foreach ($userData as $row) {
+                                                $userUsername = $row['username'];
+                                                $userDisplayName = $row['display_name'];
+                                                $userAvatar = $row['avatar'];
                                             }
+                                        }
 
-                                            if(empty($userAvatar)) {
-                                                $userAvatar = "../asset/img/blank.png";
-                                            } else {
-                                                $userAvatar = "../php/uploads/".$userAvatar;
-                                            }
-                        
+                                        if(empty($userAvatar)) {
+                                            $userAvatar = "../asset/img/blank.png";
+                                        } else {
+                                            $userAvatar = "../php/uploads/".$userAvatar;
+                                        }
                                         ?>
                                     <img src=<?php echo $userAvatar?>
                                         class="w-11 h-11 rounded-full" alt="">
                                     <div class="flex flex-col text-[15px] w-[74px] h-[41px] justify-start px-2">
-                                        <span><?php echo $userDisplayName?></span>
-                                        <span class="text-[#71767B]"><?php echo $userUsername;?></span>
+                                        <span>
+                                            <?php echo $userDisplayName ?>
+                                        </span>
+                                        <span class="text-[#71767B]">
+                                            <?php echo $userUsername; ?>
+                                        </span>
                                     </div>
                                     <div class="flex items-center w-full justify-end">
                                         <svg viewBox="0 0 24 24" aria-hidden="true" class="svg">
@@ -237,25 +240,29 @@
                     <div class="flex justify-center">
                         <ul
                             class="dropdown-content z-[1] menu p-2 shadow bg-black dropdown-shadow rounded-box w-[110%]">
-                            <li><a href="../php/actions/logout.php" class="px-4 py-3">Wyloguj się z konta <?php echo $userUsername;?></a></li>
+                            <li><a href="../php/actions/logout.php" class="px-4 py-3">Wyloguj się z konta
+                                    <?php echo $userUsername; ?>
+                                </a></li>
                         </ul>
                     </div>
                 </div>
             </div>
         </ul>
-    </div>                                
+    </div>
     <dialog id="addTweetModal" class="modal min-h-[220px]">
         <div class="modal-box flex flex-col bg-black border border-white w-full">
-                <form action="../php/actions/AddPost.php" method="POST" enctype="multipart/form-data">
+            <form action="../php/actions/AddPost.php" method="POST" enctype="multipart/form-data">
                 <div class="flex flex-col">
                     <img src=<?php echo $userAvatar?>
                         class="w-11 rounded-full mr-3" alt="">
-                    <input type="text" placeholder="Tytuł" name="title" class="mt-3 w-full bg-black outline-none h-auto" required>
+                    <input type="text" placeholder="Tytuł" name="title" class="mt-3 w-full bg-black outline-none h-auto"
+                        required>
                     <textarea name="desc" placeholder="Co się dzieje?!"
-                        class="min-h-24 h-24 resize-none mt-3 w-full bg-black outline-none" required oninput="autoResizeTextarea(this)"></textarea>
-                    <input type="file" name="avatar" id="avatar" accept="image/*" class="mx-auto mt-3 file-input file-input-bordered w-full max-w-xs" />
+                        class="min-h-24 h-24 resize-none mt-3 w-full bg-black outline-none" required
+                        oninput="autoResizeTextarea(this)"></textarea>
+                        <input type="file" name="avatar" id="avatar" accept="image/*" class="mx-auto mt-3 file-input file-input-bordered w-full max-w-xs" />
                     <p class="text-center text-xs my-2">zdjęcie opcjonale</p>
-                    </div>
+                </div>
                 <hr class="mt-1">
                 <div class="justify-between items-center w-full flex">
                     <div>
@@ -268,41 +275,139 @@
                     </div>
                 </div>
             </form>
-            </div>
+        </div>
         <form method="dialog" class="modal-backdrop">
             <button>close</button>
         </form>
     </dialog>
 
-    <div class="flex flex-col">
+    <?php
+    function calculateTime($interval)
+    {
+        if ($interval->y > 0) {
+            return $interval->format('%yl.');
+        } elseif ($interval->m > 0) {
+            return $interval->format('%mm.');
+        } elseif ($interval->d > 0) {
+            return $interval->format('%dd.');
+        } elseif ($interval->h > 0) {
+            return $interval->format('%hg.');
+        } elseif ($interval->i > 0) {
+            return $interval->format('%im.');
+        } else {
+            return 'Teraz';
+        }
+    }
 
-        <div class="w-full min-h-20 px-0 md:w-[600px] md:px-[16px] post hidden md:block">
-            <form action="../php/actions/AddPost.php" method="POST" enctype="multipart/form-data">
-                <div class="flex mt-3">
+    $postId = $_GET['postId'];
+
+    $queryBuilder = new SQLQueryBuilder('posts', $conn);
+    $queryBuilder->addCondition('id', $postId);
+    $postData = $queryBuilder->executeQuery();
+
+    if (!empty($postData)) {
+        foreach ($postData as $row) {
+            $postId = $row['id'];
+            $PostTitle = $row['title'];
+            $PostDesc = str_replace('\r\n', '<br>', $row['description']);
+            $Tag = $row['tag'];
+            $PostImg = $row['img'];
+            $PostCreatedAt = $row['created_at'];
+            $PostUserId = $row['user_id'];
+            $PostImg = $row['img'];
+
+            $queryBuilder = new SQLQueryBuilder("users", $conn);
+            $queryBuilder->addCondition('id', $PostUserId);
+            $data = $queryBuilder->executeQuery();
+
+            if (!empty($data)) {
+                foreach ($data as $row) {
+                    $username = $row['username'];
+                    $displayName = $row['display_name'];
+                    $avatar = $row['avatar'];
+                }
+                if(empty($avatar)) {
+                    $avatar = "../asset/img/blank.png";
+                } else {
+                    $avatar = "../php/uploads/".$avatar;
+                }
+
+                $PostCreatedAt = new DateTime($PostCreatedAt);
+                $now = new DateTime();
+
+                $interval = $PostCreatedAt->diff($now);
+
+                $PostCreatedAt = calculateTime($interval);
+            }
+        }
+    }
+
+    if (!function_exists('checkIfTag')) {
+        function checkIfTag($value, $isLink) {
+            if (!empty($value)) {
+                if (!$isLink) {
+                    return "#$value";
+                }
+                return $value;
+            } else {
+                return false;
+            }
+        }
+    }
+    ?>
+    <div class="flex flex-col">
+        <div class="w-full min-h-20 px-0 md:w-[600px] md:min-h-[78px] md:px-[16px] post">
+            <div class="flex mt-3 ml-2 md:ml-0">
+                <a href="profil.php?u=<?php echo $username?>" class="cursor-pointer">
                     <img src=<?php echo $userAvatar?>
-                        class="w-11 h-11 mt-2 rounded-full" alt="">
-                    <div class="ml-3 flex flex-col w-full">
-                        <div>
-                            <input type="text" placeholder="Tytuł" name="title" class="mt-3 w-full bg-black outline-none h-auto" required>
-                            <textarea name="desc" placeholder="Co się dzieje?!"
-                                class=" mt-3 w-full bg-black outline-none min-h-[48px] max-h-96 mb-3" required oninput="autoResizeTextarea(this)"></textarea>
-                            <div class="flex flex-col justify-center">
-                                <input type="file" name="avatar" id="avatar" accept="image/*" class="mx-auto mt-3 file-input file-input-bordered w-full max-w-xs" />
-                                <p class="text-center text-xs my-2">zdjęcie opcjonale</p>
-                            </div>
-                        </div>
-                        <div class="justify-between items-center w-full flex mb-2">
-                            <div>
-                                <input type="text" placeholder="#php" name="tag" class="h-[36px] p-2 rounded-xl">
-                            </div>
-                            <div>
-                                <button
-                                    class="text-center bg-[#1D9BF0]  font-bold px-8 h-[36px] button-left-nav rounded-full cursor-pointer hover:opacity-80 transition-opacity"
-                                    type="submit">Opublikuj
-                                    Wpis</button>
-                            </div>
-                        </div>
+                    class="w-11 h-11 rounded-full" alt="">
+                </a>
+                <div class="ml-3 flex flex-col">
+                    <div>
+                        <a href="profil.php?u=<?php echo $username?>" class="cursor-pointer"><span class=""><?php echo $displayName?></span></a>
+                        <span class="ml-1">·</span>
+                        <a href="profil.php?u=<?php echo $username?>" class="cursor-pointer"><span class="ml-1"><?php echo $username?></span></a>
+                        <span class="ml-1">·</span>
+                        <a href="profil.php?u=<?php echo $username?>" class="cursor-pointer"><span class="ml-1"><?php echo $PostCreatedAt?></span></a>
                     </div>
+                    <h1 class="font-bold"><?php echo $PostTitle?></h1>
+                    <div class="mb-[22px] w-80 md:w-[500px]">
+                        <?php echo $PostDesc?>
+                    </div>
+                    <span class="mt-[20px] mb-2 text-blue-400 cursor-pointer"><a href=<?php echo "index.php?tag=".checkIfTag($Tag, true)?> ><?php echo checkIfTag($Tag, false); ?></a></span>
+                    <?php
+                        if (!empty($PostImg)) {
+                            $PostImg = "../php/uploads/".$PostImg;
+                            echo "<img class='scale-img cursor-pointer mb-2' src='$PostImg'>";
+                        }
+                    ?>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-full min-h-20 px-0 md:w-[600px] md:px-[16px] post container">
+            <form action="../php/actions/AddComment.php" method="POST">
+                <div class="flex mt-3">
+                    <form action="../php/actions/AddComment.php" method="POST">
+                        <img src=<?php echo $userAvatar?>
+                            class="w-11 h-11 mt-2 rounded-full ml-2 md:ml-0" alt="">
+                        <div class="ml-3 flex flex-col w-full">
+                            <div>
+                                <textarea name="desc" placeholder="Zdisuj oponenta!"
+                                    class=" mt-3 w-full bg-black outline-none min-h-[48px] max-h-96 mb-3" required
+                                    oninput="autoResizeTextarea(this)"></textarea>
+                                <input type="hidden" name="postId" value=<?php echo $postId?> >
+                            </div>
+                            <div class="justify-end items-center w-full flex mb-2">
+                                <div>
+                                    <button
+                                        class="text-center bg-[#1D9BF0]  font-bold px-8 h-[36px] mr-3 md:mr-0 button-left-nav rounded-full cursor-pointer hover:opacity-80 transition-opacity"
+                                        type="submit">Opublikuj
+                                        Komentarz</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </form>
         </div>
@@ -310,44 +415,34 @@
         <?php
 
         $itemsPerPage = 5;
-        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $currentPage = isset($_GET['page']) ? (int) $_GET['page'] : 1;
         $offset = ($currentPage - 1) * $itemsPerPage;
 
 
-        $queryBuilder = new SQLQueryBuilder('posts', $conn);
+        $queryBuilder = new SQLQueryBuilder('comments', $conn);
         $queryBuilder->orderBy('created_at', 'DESC');
-
-        if(isset($_GET['tag'])) {
-            $tagURL = $_GET['tag'];
-            if ($tagURL) {
-                $queryBuilder->addCondition('tag', $tagURL);
-            }
-        }
+        $queryBuilder->addCondition('post_id', $postId);
 
         $queryBuilder->limit($itemsPerPage, $offset);
 
         $data = $queryBuilder->executeQuery();
 
-        if(!empty($data)) {
+        if (!empty($data)) {
             $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
 
-            foreach($data as $row) {
-                $postId = $row['id'];
-                $title = $row['title'];
+            foreach ($data as $row) {
+                $commentId = $row['id'];
                 $desc = str_replace('\r\n', '<br>', $row['description']);
-                $tag = $row['tag'];
-                $postImg = $row['img'];
                 $createdAt = $row['created_at'];
                 $userId = $row['user_id'];
-                $img = $row['img'];
 
 
                 $queryBuilder = new SQLQueryBuilder("users", $conn);
                 $queryBuilder->addCondition('id', $userId);
                 $data = $queryBuilder->executeQuery();
 
-                if(!empty($data)) {
-                    foreach($data as $row) {
+                if (!empty($data)) {
+                    foreach ($data as $row) {
                         $username = $row['username'];
                         $displayName = $row['display_name'];
                         $avatar = $row['avatar'];
@@ -364,63 +459,28 @@
 
                     $interval = $createdAt->diff($now);
 
-                    if($interval->y > 0) {
-                        $createdAt = $interval->format('%yl.');
-                    } elseif($interval->m > 0) {
-                        $createdAt = $interval->format('%mm.');
-                    } elseif($interval->d > 0) {
-                        $createdAt = $interval->format('%dd.');
-                    } elseif($interval->h > 0) {
-                        $createdAt = $interval->format('%hg.');
-                    } elseif($interval->i > 0) {
-                        $createdAt = $interval->format('%im.');
-                    } else {
-                        $createdAt = 'Teraz';
-                    }
-
-                    if (!function_exists('checkIfTag')) {
-                        function checkIfTag($value, $isLink) {
-                            if (!empty($value)) {
-                                if (!$isLink) {
-                                    return "#$value";
-                                }
-                                return $value;
-                            } else {
-                                return false;
-                            }
-                        }
-                    }
+                    $createdAt = calculateTime($interval);
 
                     echo '
                         <div class="w-full min-h-20 px-0 md:w-[600px] md:min-h-[78px] md:px-[16px] post">
                         <div class="flex mt-3 ml-2 md:ml-0">
-                            <a href="./profil.php?u='.$username.'" class="cursor-pointer">
-                            <img src='.$avatar.'
+                            <a href="./profil.php?u=' . $username . '" class="cursor-pointer">
+                            <img src=' . $avatar . '
                                 class="w-11 h-11 rounded-full" alt="">
                             </a>
                             <div class="ml-3 flex flex-col">
                                 <div>
-                                    <span class=""><a href="./profil.php?u='.$username.'" class="cursor-pointer">'.$displayName.'</a></span>
+                                    <span class=""><a href="./profil.php?u=' . $username . '" class="cursor-pointer">' . $displayName . '</a></span>
                                     <span class="ml-1">·</span>
-                                    <span class=""><a href="./profil.php?u='.$username.'" class="cursor-pointer">'.$username.'</a></span>
+                                    <span class=""><a href="./profil.php?u=' . $username . '" class="cursor-pointer">' . $username . '</a></span>
                                     <span class="ml-1">·</span>
-                                    <span class="ml-1">'.$createdAt.'</span>
+                                    <span class="ml-1">' . $createdAt . '</span>
                                 </div>
-                                <h1 class="font-bold cursor-pointer" onClick="moveToComments('.$postId.')">'.$title.'</h1>
-                                <div class="w-80 md:w-[500px] line-clamp-4 cursor-pointer" onClick="moveToComments('.$postId.')">'.$desc.'</div>
-                                <span class="mt-[22px] mb-[15px] text-blue-400 cursor-pointer"><a href="?tag='.checkIfTag($tag, true).'">'.checkIfTag($tag, false).'</a></span>
-                                ';
-                                
-                                if (!empty($img)) {
-                                    $img = "../php/uploads/".$img;
-                                    echo "<img class='scale-img cursor-pointer mb-2' src='$img' onClick='moveToComments($postId)'>";
-                                }
-
-                                if (($_SESSION['isAdmin'] && isset($_GET['admin']) && $_GET['admin'] === "true") || $_SESSION['id'] == $userId) {
-                                    echo "<a href='../php/actions/deletePost.php?id=$postId&author=$userId' class='px-4 py-2 bg-red-500 rounded-full my-3 w-1/2 mx-auto hover:opacity-80 transition-all text-center font-bold cursor-pointer'>Usuń Post</a>";
-                                }
-
-                            echo '</div>
+                                <div class="w-80 md:w-[500px] mb-[21px]">' . $desc . '</div>';
+                    if (($_SESSION['isAdmin'] && isset($_GET['admin']) && $_GET['admin'] === "true") || $_SESSION['id'] == $userId) {
+                        echo "<a href='../php/actions/deleteComment.php?id=$commentId&author=$userId' class='px-4 py-3 bg-red-500 rounded-full my-2 w-1/2 mx-auto hover:opacity-80 transition-all text-center font-bold cursor-pointer'>Usuń Komentarz</a>";
+                    }
+                    echo '</div>
                             </div>
                         </div>';
                 }
@@ -428,16 +488,9 @@
         }
 
 
-        $queryBuilder = new SQLQueryBuilder('posts', $conn);
-        if(isset($_GET['tag'])) {
-            if ($_GET['tag']) {
-                $tagURL = $_GET['tag'];
-                $condition = "tag = '$tagURL'";
-                $count = $queryBuilder->count($condition);
-            }
-        } else {
-            $count = $queryBuilder->count();
-        }
+        $queryBuilder = new SQLQueryBuilder('comments', $conn);
+        $condition = "post_id = $postId";
+        $count = $queryBuilder->count($condition);
 
         if (isset($_GET['page'])) {
             $maxPages = round($count / 5) * 5 / 5;
@@ -446,7 +499,6 @@
             }
         }
 
-        // $conn->close();
         ?>
 
         <!-- Pagination -->
@@ -460,13 +512,6 @@
                 </a>
                 <button class="join-item btn" onclick="incrementPage(<?php echo $count ?>)">»</button>
             </div>
-            <?php
-            if(isset($_GET['tag'])) {
-                if ($_GET['tag']) {
-                    echo '<button class="btn justify-center mt-4" onclick="clearTag()">Wyczyść tag</button>';
-                }
-            }
-            ?>
         </div>
 
     </div>
@@ -498,6 +543,7 @@
                 ?>
         </aside>
     </div>
-    <script src='./script.js'></script>
+    <script src="./script.js"></script>
 </body>
+
 </html>
