@@ -4,7 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login / X</title>
+    <link rel="mask-icon" sizes="any" href="https://abs.twimg.com/responsive-web/client-web/icon-svg.ea5ff4aa.svg"
+        color="#1D9BF0">
+    <link rel="shortcut icon" href="https://abs.twimg.com/favicons/twitter.3.ico">
+    <link rel="apple-touch-icon" sizes="192x192"
+        href="https://abs.twimg.com/responsive-web/client-web/icon-ios.77d25eba.png" />
+    <!-- <link href="/dist/output.css" rel="stylesheet"> -->
     <link href="../../dist/output.css" rel="stylesheet">
 </head>
 

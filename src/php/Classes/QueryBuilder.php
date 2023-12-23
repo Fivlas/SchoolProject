@@ -6,18 +6,21 @@ class SQLQueryBuilder {
     private $limit;
     private $offset;
     private $conn;
+    private $type;
 
     public function __construct($table, $conn) {
         $this->table = $table;
         $this->conn = $conn;
     }
 
-    public function addCondition($column, $value, $operator = '=') {
+    public function addCondition($column, $value, $operator = '=', $type = "AND") {
         $this->conditions[] = [
             'column' => $column,
             'value' => $value,
             'operator' => $operator
         ];
+
+        $this->type = $type;
     }
 
     public function orderBy($column, $direction = 'ASC') {
@@ -101,7 +104,7 @@ class SQLQueryBuilder {
                 $conditions[] = "{$condition['column']} {$condition['operator']} '{$condition['value']}'";
             }
 
-            $query .= implode(' AND ', $conditions);
+            $query .= implode(" $this->type ", $conditions);
         }
 
         if (!empty($this->orderBy)) {
@@ -124,5 +127,6 @@ class SQLQueryBuilder {
 
         return $query;
     }
+
 }
 ?>

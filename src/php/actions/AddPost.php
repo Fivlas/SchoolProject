@@ -23,7 +23,8 @@
                 mkdir($uploadDir, 0777, true);
             }
     
-            $uploadFile = $uploadDir . uniqid() . '_' . basename($_FILES["avatar"]["name"]);
+            $trimSpaces = str_replace(' ', '', basename($_FILES["avatar"]["name"]));
+            $uploadFile = $uploadDir . uniqid() . '_' . $trimSpaces;
     
             if (move_uploaded_file($_FILES["avatar"]["tmp_name"], $uploadFile)) {
     

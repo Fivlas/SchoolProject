@@ -9,7 +9,15 @@ require_once('../Classes/QueryBuilder.php');
 require_once('../Classes/DataInsert.php');
 $conn = connectToDatabase();
 
-$id = $_SESSION["id"];
+$id = $_POST['id'];
+$queryBuilderUser = new SQLQueryBuilder("users", $conn);
+$queryBuilderUser->addCondition("id", $id);
+$userData = $queryBuilderUser->executeQuery();
+
+foreach ($userData as $row) {
+    $dbID = $row["id"];
+    $userNameDb = $row["username"];
+}
 
     if (isset($_POST['username'])) {
         if (!empty($_POST['username'])) {
@@ -24,13 +32,15 @@ $id = $_SESSION["id"];
             } else {
                 $updateData = ['display_name' => $username];
                 $newUserName = strtolower($username);
-                $newUserName = "@$newUserName";
+                $newUserName = str_replace(' ', '', "@$newUserName");
                 $updatedUserName = ['username' => $newUserName];
                 $updateCondition = "id = $id";        
                 $queryBuilder->update($updateData, $updateCondition);
                 $queryBuilder->update($updatedUserName, $updateCondition);
 
-                $_SESSION['username'] = $newUserName;
+                if (!$_SESSION['isAdmin']) {
+                    $_SESSION['username'] = $newUserName;
+                }
             }
         }
     }
@@ -42,7 +52,8 @@ $id = $_SESSION["id"];
             mkdir($uploadDir, 0777, true);
         }
 
-        $uploadFile = $uploadDir . uniqid() . '_' . basename($_FILES["avatar"]["name"]);
+        $trimSpaces = str_replace(' ', '', basename($_FILES["avatar"]["name"]));
+        $uploadFile = $uploadDir . uniqid() . '_' . $trimSpaces;
 
         if (move_uploaded_file($_FILES["avatar"]["tmp_name"], $uploadFile)) {
 
@@ -60,8 +71,11 @@ $id = $_SESSION["id"];
         }
     }
     
-    header("Location: ../../html/profil.php");
-    
+    if (isset($newUserName)) {
+        header("Location: ../../html/profil.php?u=$newUserName");
+    } else {
+        header("Location: ../../html/profil.php?u=$userNameDb");
+    }
     $conn->close();
     exit();
 

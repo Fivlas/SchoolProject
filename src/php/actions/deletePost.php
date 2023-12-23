@@ -16,7 +16,12 @@ if (($_GET['author'] == $_SESSION['id']) || $_SESSION['isAdmin'] == 1) {
     $postId = $_GET['id'];
     $deleteRows->deleteRow('posts', "id=$postId");
     $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'index.php';
-    header("Location: $referer");
+    echo $referer;
+    if (strpos($referer, 'post.php') != false) {
+        header("Location: ../../html/index.php");
+    } else {
+        header("Location: $referer");
+    }
     $conn->close();
     exit();
 }

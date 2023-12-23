@@ -15,7 +15,7 @@ if (isset($_POST['username']) && $_POST['password'] && $_POST['passwordAgain']) 
     
     $queryBuilder = new SQLQueryBuilder('users', $conn);
     
-    $buildedUsersname = "@".strtolower($username);
+    $buildedUsersname = str_replace(' ', '', "@".strtolower($username));
 
     echo $buildedUsersname;
     $condition = "username = '$buildedUsersname'";
@@ -55,7 +55,8 @@ if (isset($_POST['username']) && $_POST['password'] && $_POST['passwordAgain']) 
                     mkdir($uploadDir, 0777, true);
                 }
         
-                $uploadFile = $uploadDir . uniqid() . '_' . basename($_FILES["avatar"]["name"]);
+                $trimSpaces = str_replace(' ', '', basename($_FILES["avatar"]["name"]));
+                $uploadFile = $uploadDir . uniqid() . '_' . $trimSpaces;
         
                 if (move_uploaded_file($_FILES["avatar"]["tmp_name"], $uploadFile)) {
         
