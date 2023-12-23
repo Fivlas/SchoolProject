@@ -10,7 +10,7 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Główna / X</title>
+    <title>Post / X</title>
     <link rel="mask-icon" sizes="any" href="https://abs.twimg.com/responsive-web/client-web/icon-svg.ea5ff4aa.svg"
         color="#1D9BF0">
     <link rel="shortcut icon" href="https://abs.twimg.com/favicons/twitter.3.ico">
@@ -46,7 +46,7 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
                             <div
                                 class="h-[50.25px] p-3 flex group-hover:bg-[rgba(231,233,234,0.1)] transition-all rounded-full cursor-pointer">
                                 Admin Mode
-                                <input type="checkbox" class="ml-3 toggle" name="adminMode" id="adminMode" onchange="adminModeCheckbox()"';
+                                <input type="checkbox" class="ml-3 toggle" name="adminMode" id="adminMode" onchange="adminModeCheckbox(this)"';
                     if (isset($_GET['admin']) && $_GET['admin'] == "true" && isset($_GET['admin'])) {
                         echo "checked";
                     }
@@ -270,8 +270,7 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
                     </div>
                     <div>
                         <button
-                            class="text-center bg-[#1D9BF0] mt-[10px] font-bold px-8 h-[36px] button-left-nav rounded-full cursor-pointer hover:opacity-80 transition-opacity">Opublikuj
-                            Wpis</button>
+                            class="text-center bg-[#1D9BF0] mt-[10px] font-bold px-8 h-[36px] button-left-nav rounded-full cursor-pointer hover:opacity-80 transition-opacity">Opublikuj</button>
                     </div>
                 </div>
             </form>
@@ -322,6 +321,7 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
 
             if (!empty($data)) {
                 foreach ($data as $row) {
+                    $id = $row['id'];
                     $username = $row['username'];
                     $displayName = $row['display_name'];
                     $avatar = $row['avatar'];
@@ -359,7 +359,7 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
         <div class="w-full min-h-20 px-0 md:w-[600px] md:min-h-[78px] md:px-[16px] post">
             <div class="flex mt-3 ml-2 md:ml-0">
                 <a href="profil.php?u=<?php echo $username?>" class="cursor-pointer">
-                    <img src=<?php echo $userAvatar?>
+                    <img src=<?php echo $avatar?>
                     class="w-11 h-11 rounded-full" alt="">
                 </a>
                 <div class="ml-3 flex flex-col">
@@ -379,6 +379,10 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
                         if (!empty($PostImg)) {
                             $PostImg = "../php/uploads/".$PostImg;
                             echo "<img class='scale-img cursor-pointer mb-2' src='$PostImg'>";
+                        }
+
+                        if (($_SESSION['isAdmin'] && isset($_GET['admin']) && $_GET['admin'] === "true") || $_SESSION['id'] == $PostUserId) {
+                            echo "<a href='../php/actions/deletePost.php?id=$postId&author=$PostUserId' class='px-4 py-2 bg-red-500 rounded-full my-3 w-1/2 mx-auto hover:opacity-80 transition-all text-center font-bold cursor-pointer'>Usuń Post</a>";
                         }
                     ?>
                 </div>
@@ -515,9 +519,23 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
         </div>
 
     </div>
-    <div class="md:flex flex-col hidden gap-4 ml-[30px]">
+    <div class="md:flex flex-col hidden ml-[30px]">
         <!-- <aside class="w-[350px] h-[165px] bg-[#16181c]"></aside> -->
-        <aside class="w-[350px] bg-[#16181c] rounded-xl mt-[60px]">
+        <form action="../php/actions/search.php" method="POST">
+            <div class="w-[350px] h-11 bg-[#16181c] mb-[18px] mt-[6px] rounded-full flex items-center">
+                <div class="h-11">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" class="w-11 h-[19px] mt-[27%]">
+                        <g>
+                            <path fill="#ffff"
+                                d="M10.25 3.75c-3.59 0-6.5 2.91-6.5 6.5s2.91 6.5 6.5 6.5c1.795 0 3.419-.726 4.596-1.904 1.178-1.177 1.904-2.801 1.904-4.596 0-3.59-2.91-6.5-6.5-6.5zm-8.5 6.5c0-4.694 3.806-8.5 8.5-8.5s8.5 3.806 8.5 8.5c0 1.986-.682 3.815-1.824 5.262l4.781 4.781-1.414 1.414-4.781-4.781c-1.447 1.142-3.276 1.824-5.262 1.824-4.694 0-8.5-3.806-8.5-8.5z">
+                            </path>
+                        </g>
+                    </svg>
+                </div>
+                <input class="text-[15px] bg-[#16181c] outline-none w-full mr-3" placeholder="Szukaj" name="search"></input>
+            </div>
+        </form>
+        <aside class="w-[350px] bg-[#16181c] rounded-xl mt-4">
             <div class="flex flex-col gap-1">
                 <h2 class="text-[20px] font-bold px-4 py-3">Najpopularniejsze Tagi</h2>
                 <?php
@@ -542,6 +560,48 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
                     $conn->close();
                 ?>
         </aside>
+    </div>
+    <div class="btm-nav md:hidden">
+        <a href="index.php">
+            <svg viewBox="0 0 24 24" aria-hidden="true" class="h-5 w-5">
+                <g>
+                    <path
+                        d="M21.591 7.146L12.52 1.157c-.316-.21-.724-.21-1.04 0l-9.071 5.99c-.26.173-.409.456-.409.757v13.183c0 .502.418.913.929.913h6.638c.511 0 .929-.41.929-.913v-7.075h3.008v7.075c0 .502.418.913.929.913h6.639c.51 0 .928-.41.928-.913V7.904c0-.301-.158-.584-.408-.758zM20 20l-4.5.01.011-7.097c0-.502-.418-.913-.928-.913H9.44c-.511 0-.929.41-.929.913L8.5 20H4V8.773l8.011-5.342L20 8.764z"
+                        fill="#fff">
+                    </path>
+                </g>
+            </svg>
+        </a>
+        <a href="profil.php">
+            <svg viewBox="0 0 24 24" aria-hidden="true" class="h-5 w-5">
+                <g>
+                    <path
+                        d="M5.651 19h12.698c-.337-1.8-1.023-3.21-1.945-4.19C15.318 13.65 13.838 13 12 13s-3.317.65-4.404 1.81c-.922.98-1.608 2.39-1.945 4.19zm.486-5.56C7.627 11.85 9.648 11 12 11s4.373.85 5.863 2.44c1.477 1.58 2.366 3.8 2.632 6.46l.11 1.1H3.395l.11-1.1c.266-2.66 1.155-4.88 2.632-6.46zM12 4c-1.105 0-2 .9-2 2s.895 2 2 2 2-.9 2-2-.895-2-2-2zM8 6c0-2.21 1.791-4 4-4s4 1.79 4 4-1.791 4-4 4-4-1.79-4-4z"
+                        fill="#fff"></path>
+                </g>
+            </svg>
+        </a>
+        <button onclick="addTweetModal.showModal()"
+            class="text-center bg-[#1D9BF0] font-bold px-8 h-[52px] button-left-nav rounded-full cursor-pointer hover:opacity-80 transition-opacity">
+            Dodaj
+        </button>
+        <?php
+        if ($_SESSION['isAdmin'] == true) {
+            echo '
+            <button>
+                <label class="swap">
+                    <input type="checkbox" onchange="adminModeCheckbox(this)" id="bottomAdminMode"';
+                    if (isset($_GET['admin']) && $_GET['admin'] == "true" && isset($_GET['admin'])) {
+                        echo "checked";
+                    }
+                    echo '/>
+                    <div class="swap-on">ON</div>
+                    <div class="swap-off">OFF</div>
+                </label>
+            </button>
+            ';
+        }
+        ?>
     </div>
     <script src="./script.js"></script>
 </body>

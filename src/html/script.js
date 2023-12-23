@@ -10,8 +10,8 @@ const clearTag = () => {
     window.location.href = updatedUrl;
 }
 
-const adminModeCheckbox = () => {
-    let isChecked = document.getElementById("adminMode").checked;
+const adminModeCheckbox = (checkbox) => {
+    let isChecked = checkbox.checked;
     var url = new URL(window.location.href);
     url.searchParams.set('admin', isChecked);
     window.location.href = url.toString();
