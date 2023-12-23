@@ -49,7 +49,7 @@ body::-webkit-scrollbar {
 }
 
 body {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif; 
+    font-family: TwitterChirp, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif; 
     @apply text-[#e7e9ea];
     scrollbar-width: none !important;
 }
@@ -84,13 +84,17 @@ body {
 }
 
 .post:last-child {
-<<<<<<< Updated upstream
-    border-bottom: 1px solid rgb(47, 51, 54);
-=======
     border-bottom: 1px solid rgb(47, 51, 54) !important;
 }
 
 .button-login-hover:hover {
     background-color: rgba(3, 28, 252, 10%);
->>>>>>> Stashed changes
+}
+
+.scale-img {
+    aspect-ratio: 3/2;
+    object-fit: contain;
+    width: auto;
+    height: 200px;
+    @apply rounded-md;
 }

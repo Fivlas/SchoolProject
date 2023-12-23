@@ -2,7 +2,7 @@
 function connectToDatabase() {
     $servername = "sql.24.svpj.link";
     $username = "db_92584";
-    $password = "XD0wSr8cdG5c";
+    $password = "2y1yj0gr";
     $dbname = "db_92584";
 
     $conn = new mysqli($servername, $username, $password, $dbname);
