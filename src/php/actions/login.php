@@ -43,6 +43,7 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
                 $usernameDb = $row['username'];
                 $passwordDb = $row['password'];
                 $isAdmin = $row['isAdmin'];
+                $isAdult = $row['isAdult'];
             }
 
             if ($usernameDb === $uname && password_verify($pass, $passwordDb)) {
@@ -50,6 +51,7 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
                 $_SESSION['username'] = $usernameDb;
                 $_SESSION['id'] = $idDb;
                 $_SESSION['isAdmin'] = $isAdmin;
+                $_SESSION['isAdult'] = $isAdult;
 
                 header('location: ../../html/index.php');
                 exit();

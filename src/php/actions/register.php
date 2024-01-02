@@ -2,7 +2,7 @@
 session_start();
 
 
-if (isset($_POST['username']) && $_POST['password'] && $_POST['passwordAgain']) {
+if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['passwordAgain'])) {
     require_once('../Classes/db_connect.php');
     require_once('../Classes/QueryBuilder.php');
     require_once('../Classes/DataInsert.php');
@@ -12,6 +12,12 @@ if (isset($_POST['username']) && $_POST['password'] && $_POST['passwordAgain']) 
     $username = $_POST['username'];
     $password = $_POST['password'];
     $passwordAgain = $_POST['passwordAgain'];
+
+    if (isset($_POST['isAdult'])) {
+        $isAdult = 1;
+    } else {
+        $isAdult = 0;
+    }
     
     $queryBuilder = new SQLQueryBuilder('users', $conn);
     
@@ -32,6 +38,7 @@ if (isset($_POST['username']) && $_POST['password'] && $_POST['passwordAgain']) 
             'password' => password_hash($password, PASSWORD_DEFAULT),
             'display_name' => $username,
             'avatar' => NULL,
+            'isAdult' => $isAdult,
         ];
         $dataInserter->insertData('users', $dataToInsert);
 
@@ -47,6 +54,7 @@ if (isset($_POST['username']) && $_POST['password'] && $_POST['passwordAgain']) 
             $_SESSION['username'] = $buildedUsersname;
             $_SESSION['id'] = $id;
             $_SESSION['isAdmin'] = $isAdmin;
+            $_SESSION['isAdult'] = $isAdult;
 
             if (isset($_FILES["avatar"]) && $_FILES["avatar"]["error"] == UPLOAD_ERR_OK) {
                 $uploadDir = "../uploads/";

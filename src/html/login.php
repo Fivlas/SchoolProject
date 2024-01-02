@@ -114,14 +114,20 @@
                     <input type="text" name="username" placeholder="Nazwa użytkownika" class="h-[52px] rounded-md bg-black border border-[#333639] focus:border-2 focus:border-[#179BF0] outline-none px-2">
                     <input type="password" name="password" placeholder="Hasło" class="h-[52px] rounded-md bg-black border border-[#333639] focus:border-2 focus:border-[#179BF0] outline-none px-2 mt-[27px]">
                     <input type="password" name="passwordAgain" placeholder="Powtórz hasło" class="h-[52px] rounded-md bg-black border border-[#333639] focus:border-2 focus:border-[#179BF0] outline-none px-2 mt-[27px]">
-                    <input type="file" name="avatar" id="avatar" accept="image/*" class="mt-[27px] file-input file-input-bordered w-full max-w-xs" />
+                    <div class="form-control my-2">
+                        <label class="label cursor-pointer">
+                            <span class="label-text">Czy jesteś pełnoletni ?</span> 
+                            <input type="checkbox" class="checkbox" name="isAdult" />
+                        </label>
+                    </div>
+                    <input type="file" name="avatar" id="avatar" accept="image/*" class="file-input file-input-bordered w-full max-w-xs" />
                     <p class="text-center text-xs mt-2">Avatar Opcjonalny</p>
                     <?php
                         if (isset($_GET['registerError'])) {
                             echo '<span class="text-red-500 text-center mt-2">'.$_GET['registerError'].'</span>';
                         }
                         ?>
-                    <button class="mt-[200px] h-[52px] bg-[#eff3f4] hover:opacity-80 transition-all text-center text-black font-bold rounded-full">Utwórz konto</button>
+                    <button class="mt-[90px] h-[52px] bg-[#eff3f4] hover:opacity-80 transition-all text-center text-black font-bold rounded-full">Utwórz konto</button>
                 </div>
             </form>
         </div>

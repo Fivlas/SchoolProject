@@ -262,6 +262,18 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
                     <input type="file" name="avatar" id="avatar" accept="image/*"
                         class="mx-auto mt-3 file-input file-input-bordered w-full max-w-xs" />
                     <p class="text-center text-xs my-2">zdjęcie opcjonale</p>
+                    <?php
+                        if ($_SESSION['isAdult']) {
+                            echo "
+                                <div class='form-control container'>
+                                    <label class='label cursor-pointer'>
+                                        <span class='label-text'>Czy treść jest dla dorosłych</span> 
+                                        <input type='checkbox' class='checkbox' name='forAdult'/>
+                                    </label>
+                                </div>";
+                                
+                        }
+                    ?>
                 </div>
                 <hr class="mt-1">
                 <div class="justify-between items-center w-full flex">
@@ -311,6 +323,18 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
                                     class="mx-auto mt-3 file-input file-input-bordered w-full max-w-xs" />
                                 <p class="text-center text-xs my-2">zdjęcie opcjonale</p>
                             </div>
+                            <?php
+                                if ($_SESSION['isAdult']) {
+                                    echo "
+                                        <div class='form-control container'>
+                                            <label class='label cursor-pointer'>
+                                                <span class='label-text'>Czy treść jest dla dorosłych</span> 
+                                                <input type='checkbox' class='checkbox' name='forAdult'/>
+                                            </label>
+                                        </div>
+                                    ";
+                                }
+                            ?>
                         </div>
                         <div class="justify-between items-center w-full flex mb-2">
                             <div>
@@ -337,6 +361,10 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
 
         $queryBuilder = new SQLQueryBuilder('posts', $conn);
         $queryBuilder->orderBy('created_at', 'DESC');
+        
+        if ($_SESSION['isAdult'] == 0 && (!isset($_GET['search']) && !empty($_GET['search']))) {
+            $queryBuilder->addCondition('isForAdult', 0);
+        }
 
         if (isset($_GET['tag'])) {
             $tagURL = $_GET['tag'];
@@ -344,15 +372,13 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
                 $queryBuilder->addCondition('tag', $tagURL);
             }
         }
-        if (isset($_GET['search'])) {
+        if (isset($_GET['search']) && !empty($_GET['search'])) {
             $searchURL = $_GET['search'];
-            ;
-            if ($searchURL) {
-                $queryBuilder->addCondition('description', "%$searchURL%", "LIKE", "OR");
-                $queryBuilder->addCondition('tag', "%$searchURL%", "LIKE", "OR");
-                $queryBuilder->addCondition('title', "%$searchURL%", "LIKE", "OR");
-            }
+            $queryBuilder->addCondition('description', "%$searchURL%", "LIKE", "OR");
+            $queryBuilder->addCondition('tag', "%$searchURL%", "LIKE", "OR");
+            $queryBuilder->addCondition('title', "%$searchURL%", "LIKE", "OR");
         }
+
 
         $queryBuilder->limit($itemsPerPage, $offset);
 
@@ -370,6 +396,7 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
                 $createdAt = $row['created_at'];
                 $userId = $row['user_id'];
                 $img = $row['img'];
+                $isForAdult = $row['isForAdult'];
 
 
                 $queryBuilder = new SQLQueryBuilder("users", $conn);
@@ -422,6 +449,12 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
                         }
                     }
 
+                    if ($isForAdult) {
+                        $isForAdult = "18+";
+                    } else {
+                        $isForAdult = "Kids";
+                    }
+
                     echo '
                         <div class="w-full min-h-20 px-0 md:w-[600px] md:min-h-[78px] md:px-[16px] post">
                         <div class="flex mt-3 ml-2 md:ml-0">
@@ -436,6 +469,8 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
                                     <span class=""><a href="./profil.php?u=' . $username . '" class="cursor-pointer">' . $username . '</a></span>
                                     <span class="ml-1">·</span>
                                     <span class="ml-1">' . $createdAt . '</span>
+                                    <span class="ml-1">·</span>
+                                    <span class="ml-1">' . $isForAdult . '</span>
                                 </div>
                                 <h1 class="font-bold cursor-pointer" onClick="moveToComments(' . $postId . ')">' . $title . '</h1>
                                 <div class="w-80 md:w-[500px] line-clamp-4 cursor-pointer" onClick="moveToComments(' . $postId . ')">' . $desc . '</div>
@@ -448,7 +483,31 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
                     }
 
                     if (($_SESSION['isAdmin'] && isset($_GET['admin']) && $_GET['admin'] === "true") || $_SESSION['id'] == $userId) {
+                        echo "<a onClick='editPost".$postId.".showModal()' class='px-4 py-2 bg-blue-500 rounded-full my-3 w-1/2 mx-auto hover:opacity-80 transition-all text-center font-bold cursor-pointer'>Edytuj Post</a>";
                         echo "<a href='../php/actions/deletePost.php?id=$postId&author=$userId' class='px-4 py-2 bg-red-500 rounded-full my-3 w-1/2 mx-auto hover:opacity-80 transition-all text-center font-bold cursor-pointer'>Usuń Post</a>";
+                        echo '
+                        <dialog id="editPost'.$postId.'" class="modal">
+                        <div class="modal-box bg-black border border-white w-full md:w-[600px]">
+                            <form action="../php/actions/changePost.php" method="POST" enctype="multipart/form-data">
+                                <div class="flex flex-col justify-center px-20">
+                                    <h1 class="text-3xl mb-[33px] font-bold">Edytuj Post</h1>
+                                    <input type="text" name="title" required placeholder="Tytuł" class="h-[52px] rounded-md bg-black border border-[#333639] focus:border-2 focus:border-[#179BF0] outline-none px-2" value="' . $title . '">
+                                    <textarea name="desc" placeholder="Opis"
+                                        class="min-h-24 h-24 resize-none mt-3 w-full bg-black border border-[#333639] outline-none rounded-md overflow-hidden p-3" required
+                                        oninput="autoResizeTextarea(this)">' . $desc . '</textarea>
+                                    <input type="text" name="tag" placeholder="Tag" class="h-[52px] rounded-md bg-black border border-[#333639] focus:border-2 focus:border-[#179BF0] outline-none px-2 mt-2" value="' . $tag . '">
+                                    <input type="file" name="img" accept="image/*" class="mt-[27px] file-input file-input-bordered w-full max-w-xs" />
+                                    <input type="hidden" name="postId" value="'.$postId.'" />
+                                    <input type="hidden" name="author" value="'.$userId.'" />
+                                    <button class="mt-[200px] h-[52px] bg-[#eff3f4] hover:opacity-80 transition-all text-center text-black font-bold rounded-full">Zapisz Zamiany</button>
+                                </div>
+                            </form>
+                        </div>
+                        <form method="dialog" class="modal-backdrop">
+                            <button>close</button>
+                        </form>
+                    </dialog>';
+
                     }
 
                     echo '</div>
