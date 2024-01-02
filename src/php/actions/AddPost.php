@@ -38,12 +38,19 @@
             $fileName = NULL;
         }
 
+        if (isset($_POST['forAdult'])) {
+            $adult = 1;
+        } else {
+            $adult = 0;
+        }
+
         $dataToInsert = [
             'title' => $title,
             'description' => mysqli_real_escape_string($conn, $desc),
             'tag' => $tag,
             'user_id' => $_SESSION['id'],
             'img' => $fileName,
+            'isForAdult' => $adult,
         ];
     
         $dataInserter->insertData('posts', $dataToInsert);

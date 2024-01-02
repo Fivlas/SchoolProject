@@ -2416,6 +2416,10 @@ html {
   margin-bottom: 15px;
 }
 
+.mb-\[18px\] {
+  margin-bottom: 18px;
+}
+
 .mb-\[21px\] {
   margin-bottom: 21px;
 }
@@ -2508,6 +2512,10 @@ html {
   margin-top: 22px;
 }
 
+.mt-\[27\%\] {
+  margin-top: 27%;
+}
+
 .mt-\[27px\] {
   margin-top: 27px;
 }
@@ -2524,52 +2532,28 @@ html {
   margin-top: 60px;
 }
 
-.mt-\[9px\] {
-  margin-top: 9px;
-}
-
-.mb-\[18px\] {
-  margin-bottom: 18px;
-}
-
 .mt-\[6px\] {
   margin-top: 6px;
 }
 
-.ml-\[32px\] {
-  margin-left: 32px;
+.mt-\[9px\] {
+  margin-top: 9px;
 }
 
-.mr-\[18px\] {
-  margin-right: 18px;
+.mt-\[150px\] {
+  margin-top: 150px;
 }
 
-.ml-\[12px\] {
-  margin-left: 12px;
+.mt-\[130px\] {
+  margin-top: 130px;
 }
 
-.mt-\[50\%\] {
-  margin-top: 50%;
+.mt-\[100px\] {
+  margin-top: 100px;
 }
 
-.mt-\[20\%\] {
-  margin-top: 20%;
-}
-
-.mt-\[25\%\] {
-  margin-top: 25%;
-}
-
-.mt-\[27\%\] {
-  margin-top: 27%;
-}
-
-.mb-4 {
-  margin-bottom: 1rem;
-}
-
-.mb-7 {
-  margin-bottom: 1.75rem;
+.mt-\[90px\] {
+  margin-top: 90px;
 }
 
 .line-clamp-4 {
@@ -2585,10 +2569,6 @@ html {
 
 .table {
   display: table;
-}
-
-.grid {
-  display: grid;
 }
 
 .hidden {
@@ -2635,6 +2615,10 @@ html {
   height: 18.75px;
 }
 
+.h-\[19px\] {
+  height: 19px;
+}
+
 .h-\[36px\] {
   height: 36px;
 }
@@ -2673,10 +2657,6 @@ html {
 
 .h-screen {
   height: 100vh;
-}
-
-.h-\[19px\] {
-  height: 19px;
 }
 
 .max-h-96 {
@@ -2783,27 +2763,6 @@ html {
   width: 100vw;
 }
 
-.w-\[90\%\] {
-  width: 90%;
-}
-
-.w-\[44px\] {
-  width: 44px;
-}
-
-.w-auto {
-  width: auto;
-}
-
-.w-fit {
-  width: -moz-fit-content;
-  width: fit-content;
-}
-
-.w-\[30\%\] {
-  width: 30%;
-}
-
 .max-w-xs {
   max-width: 20rem;
 }
@@ -2818,10 +2777,6 @@ html {
 
 .flex-col {
   flex-direction: column;
-}
-
-.place-items-center {
-  place-items: center;
 }
 
 .items-center {
@@ -2856,16 +2811,16 @@ html {
   gap: 4rem;
 }
 
+.gap-2 {
+  gap: 0.5rem;
+}
+
 .gap-3 {
   gap: 0.75rem;
 }
 
-.gap-4 {
-  gap: 1rem;
-}
-
-.gap-2 {
-  gap: 0.5rem;
+.overflow-hidden {
+  overflow: hidden;
 }
 
 .rounded-box {
@@ -2940,6 +2895,11 @@ html {
 .bg-black {
   --tw-bg-opacity: 1;
   background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+}
+
+.bg-blue-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(59 130 246 / var(--tw-bg-opacity));
 }
 
 .bg-red-500 {
@@ -3019,22 +2979,6 @@ html {
 
 .pt-\[15px\] {
   padding-top: 15px;
-}
-
-.pl-\[32px\] {
-  padding-left: 32px;
-}
-
-.pr-\[18px\] {
-  padding-right: 18px;
-}
-
-.pr-\[8px\] {
-  padding-right: 8px;
-}
-
-.pr-\[3px\] {
-  padding-right: 3px;
 }
 
 .text-center {
