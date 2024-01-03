@@ -5,7 +5,7 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="pl" class='dark'>
 
 <head>
     <meta charset="UTF-8">
