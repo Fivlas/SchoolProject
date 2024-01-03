@@ -40,7 +40,8 @@ if (postElements.length > 0) {
 }
 
 const roundToMultipleOf5 = (number) => {
-    return Math.round(number / 5) * 5 / 5;
+    //return Math.round(number / 5) * 5 / 5;
+    return Math.ceil(number / 5);
 }
 
 const incrementPage = (count) => {
