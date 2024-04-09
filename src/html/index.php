@@ -362,7 +362,19 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
         $queryBuilder = new SQLQueryBuilder('posts', $conn);
         $queryBuilder->orderBy('created_at', 'DESC');
         
-        if ($_SESSION['isAdult'] == 0 && (!isset($_GET['search']) && !empty($_GET['search']))) {
+        // if (isset($_GET['search']) && !empty($_GET['search'])) {
+        //     $queryBuilder->addCondition('isForAdult', 0);
+        // }
+
+        // if ($_SESSION['isAdult'] == 0 ) {
+        //     $queryBuilder->addCondition('isForAdult', 0);
+        // }
+
+        if (isset($_GET['search']) && !empty($_GET['search'])) {
+            $queryBuilder->addCondition('isForAdult', 0);
+        }
+        
+        if (isset($_SESSION['isAdult']) && $_SESSION['isAdult'] == 0) {
             $queryBuilder->addCondition('isForAdult', 0);
         }
 
@@ -538,7 +550,8 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
         }
 
         if (isset($_GET['page'])) {
-            $maxPages = round($count / 5) * 5 / 5;
+            // $maxPages = round($count / 5) * 5 / 5;
+            $maxPages = ceil($count / 5);
             if ($_GET['page'] > $maxPages) {
                 echo "<p class='text-center mt-4'>Czego tu szukasz?</p>";
             }

@@ -1,10 +1,5 @@
 <?php
 function connectToDatabase() {
-    // $servername = "sql.24.svpj.link";
-    // $username = "db_92584";
-    // $password = "2y1yj0gr";
-    // $dbname = "db_92584";
-
     $servername = "localhost";
     $username = "root";
     $password = "";

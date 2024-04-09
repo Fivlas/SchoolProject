@@ -556,7 +556,8 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
         $count = $queryBuilder->count($condition);
 
         if (isset($_GET['page'])) {
-            $maxPages = round($count / 5) * 5 / 5;
+            // $maxPages = round($count / 5) * 5 / 5;
+            $maxPages = ceil($count / 5);
             if ($_GET['page'] > $maxPages) {
                 echo "<p class='text-center mt-4'>Czego tu szukasz?</p>";
             }
