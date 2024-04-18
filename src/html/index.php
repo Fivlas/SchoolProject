@@ -1,8 +1,8 @@
 <?php
 session_start();
-if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
-    header('location: login.php');
-}
+// if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
+//     header('location: login.php');
+// }
 ?>
 <!DOCTYPE html>
 <html lang="pl" class='dark'>
@@ -19,6 +19,11 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
     <!-- <link href="/dist/output.css" rel="stylesheet"> -->
     <link href="../../dist/output.css" rel="stylesheet">
 </head>
+<style>
+    .nic {
+        display: none !important;
+    }
+</style>
 
 <body class="md:flex justify-center bg-black w-full h-full min-h-screen">
     <div class="h-screen text-white hidden md:block">
@@ -39,23 +44,53 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
                         <a />
                 </li>
                 <?php
-                if ($_SESSION['isAdmin']) {
-                    echo '
-                    <li class="w-[259px] h-[58px] py-1 flex justify-start group -mt-[6px]">
+                if (isset($_SESSION["id"]) && isset($_SESSION["username"])) {
+                    echo "<script>const loggedIn = true</script>";
+                    if ($_SESSION['isAdmin']) {
+                        echo '
+                        <li class="w-[259px] h-[58px] py-1 flex justify-start group -mt-[6px]">
                         <label for="adminMode">
-                            <div
-                                class="h-[50.25px] p-3 flex group-hover:bg-[rgba(231,233,234,0.1)] transition-all rounded-full cursor-pointer">
-                                Admin Mode
-                                <input type="checkbox" class="ml-3 toggle" name="adminMode" id="adminMode" onchange="adminModeCheckbox(this)"';
-                    if (isset($_GET['admin']) && $_GET['admin'] == "true" && isset($_GET['admin'])) {
-                        echo "checked";
-                    }
-                    echo '
-                            </div>
+                        <div
+                        class="h-[50.25px] p-3 flex group-hover:bg-[rgba(231,233,234,0.1)] transition-all rounded-full cursor-pointer">
+                        Admin Mode
+                        <input type="checkbox" class="ml-3 toggle" name="adminMode" id="adminMode" onchange="adminModeCheckbox(this)"';
+                        if (isset($_GET['admin']) && $_GET['admin'] == "true" && isset($_GET['admin'])) {
+                            echo "checked";
+                        }
+                        echo '
+                        </div>
                         <label/>
-                    </li>';
+                        </li>';
+                    }
+                } else {
+                    echo '
+                    <li class="w-64 h-14 flex justify-start group -mt-[2px]">
+                    <div
+                        class="h-[50.25px] p-3 flex group-hover:bg-[rgba(231,233,234,0.1)] transition-all rounded-full cursor-pointer">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" class="svg">
+                            <g>
+                                <path
+                                    d="M5.651 19h12.698c-.337-1.8-1.023-3.21-1.945-4.19C15.318 13.65 13.838 13 12 13s-3.317.65-4.404 1.81c-.922.98-1.608 2.39-1.945 4.19zm.486-5.56C7.627 11.85 9.648 11 12 11s4.373.85 5.863 2.44c1.477 1.58 2.366 3.8 2.632 6.46l.11 1.1H3.395l.11-1.1c.266-2.66 1.155-4.88 2.632-6.46zM12 4c-1.105 0-2 .9-2 2s.895 2 2 2 2-.9 2-2-.895-2-2-2zM8 6c0-2.21 1.791-4 4-4s4 1.79 4 4-1.791 4-4 4-4-1.79-4-4z"
+                                    fill="#fff"></path>
+                            </g>
+                        </svg>
+                        <div class="pr-4 pl-5 text-xl leading-6"><a href="./login.php">Zaloguj się</a></div>
+                    </div>
+                </li>
+                ';
+                    echo "<script>const loggedIn = false</script>";
                 }
                 ?>
+                <script>
+                    function hideElements() {
+                        if (!loggedIn) {
+                            [...document.getElementsByClassName('hide')].forEach(el => {
+                                console.log(el);
+                                el.classList.add('nic');
+                            })
+                        }
+                    }
+                </script>
                 <li class="w-[259px] h-[58px] py-1 flex justify-start group -mt-[2px]">
                     <div
                         class="h-[50.25px] p-3 flex group-hover:bg-[rgba(231,233,234,0.1)] transition-all rounded-full cursor-pointer">
@@ -147,7 +182,7 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
                         <div class="pr-4 pl-5 text-xl leading-6"><a href="./lol.html">Premium</a></div>
                     </div>
                 </li>
-                <li class="w-64 h-14 flex justify-start group -mt-[2px]">
+                <li class="hide w-64 h-14 flex justify-start group -mt-[2px]">
                     <div
                         class="h-[50.25px] p-3 flex group-hover:bg-[rgba(231,233,234,0.1)] transition-all rounded-full cursor-pointer">
                         <svg viewBox="0 0 24 24" aria-hidden="true" class="svg">
@@ -173,7 +208,7 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
                         <div class="pr-4 pl-5 text-xl leading-6"><a href="./lol.html">Więcej</a></div>
                     </div>
                 </li>
-                <li class="flex justify-start">
+                <li class="hide flex justify-start">
                     <button onclick="addTweetModal.showModal()"
                         class="text-center bg-[#1D9BF0] w-[233px] mt-[10px] font-bold px-8 h-[52px] button-left-nav rounded-full cursor-pointer hover:opacity-80 transition-opacity">
                         Opublikuj Wpis
@@ -184,39 +219,41 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
                         <div class="absolute">
                             <li role="button" tabindex="0"
                                 class="flex items-center w-[150%] my-3 p-3 h-16 hover:bg-[rgba(231,233,234,0.1)] transition-all rounded-full cursor-pointer button-left-nav">
-                                <div class="flex w-full">
+                                <div class="flex w-full hide">
                                     <?php
-                                    require_once('../php/Classes/db_connect.php');
-                                    require_once('../php/Classes/QueryBuilder.php');
-                                    require_once('../php/Classes/DataInsert.php');
+                                    require_once ('../php/Classes/db_connect.php');
+                                    require_once ('../php/Classes/QueryBuilder.php');
+                                    require_once ('../php/Classes/DataInsert.php');
                                     $conn = connectToDatabase();
 
-                                    $username = $_SESSION['username'];
-                                    $id = $_SESSION['id'];
+                                    if (isset($_SESSION["id"]) && isset($_SESSION["username"])) {
+                                        $username = $_SESSION['username'];
+                                        $id = $_SESSION['id'];
 
-                                    $queryBuilder = new SQLQueryBuilder('users', $conn);
+                                        $queryBuilder = new SQLQueryBuilder('users', $conn);
 
-                                    $queryBuilder->addCondition('id', $id);
+                                        $queryBuilder->addCondition('id', $id);
 
-                                    $userData = $queryBuilder->executeQuery();
+                                        $userData = $queryBuilder->executeQuery();
 
-                                    if (!empty($userData)) {
-                                        foreach ($userData as $row) {
-                                            $userUsername = $row['username'];
-                                            $userDisplayName = $row['display_name'];
-                                            $userAvatar = $row['avatar'];
+                                        if (!empty($userData)) {
+                                            foreach ($userData as $row) {
+                                                $userUsername = $row['username'];
+                                                $userDisplayName = $row['display_name'];
+                                                $userAvatar = $row['avatar'];
+                                            }
+                                        }
+
+                                        if (empty($userAvatar)) {
+                                            $userAvatar = "../asset/img/blank.png";
+                                        } else {
+                                            $userAvatar = "../php/uploads/" . $userAvatar;
                                         }
                                     }
 
-                                    if (empty($userAvatar)) {
-                                        $userAvatar = "../asset/img/blank.png";
-                                    } else {
-                                        $userAvatar = "../php/uploads/" . $userAvatar;
-                                    }
-
                                     ?>
-                                    <img src=<?php echo $userAvatar ?> class="w-11 h-11 rounded-full" alt="">
-                                    <div class="flex flex-col text-[15px] w-[74px] h-[41px] justify-start px-2">
+                                    <img src=<?php echo $userAvatar ?> class="w-11 h-11 rounded-full hide" alt="">
+                                    <div class="flex flex-col text-[15px] w-[74px] h-[41px] justify-start px-2 hide">
                                         <span>
                                             <?php echo $userDisplayName ?>
                                         </span>
@@ -263,16 +300,16 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
                         class="mx-auto mt-3 file-input file-input-bordered w-full max-w-xs" />
                     <p class="text-center text-xs my-2">zdjęcie opcjonale</p>
                     <?php
-                        if ($_SESSION['isAdult']) {
-                            echo "
+                    if ($_SESSION['isAdult']) {
+                        echo "
                                 <div class='form-control container'>
                                     <label class='label cursor-pointer'>
                                         <span class='label-text'>Czy treść jest dla dorosłych</span> 
                                         <input type='checkbox' class='checkbox' name='forAdult'/>
                                     </label>
                                 </div>";
-                                
-                        }
+
+                    }
                     ?>
                 </div>
                 <hr class="mt-1">
@@ -293,7 +330,7 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
     </dialog>
 
     <div class="flex flex-col">
-    <form action="../php/actions/search.php" method="POST" class="mb-2 md:hidden">
+        <form action="../php/actions/search.php" method="POST" class="mb-2 md:hidden">
             <div class="w-[350px] h-11 bg-[#16181c] mb-[18px] mt-[6px] rounded-full flex items-center mx-auto">
                 <div class="h-11">
                     <svg viewBox="0 0 24 24" aria-hidden="true" class="w-11 h-[19px] mt-[27%]">
@@ -304,10 +341,11 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
                         </g>
                     </svg>
                 </div>
-                <input class="text-[15px] bg-[#16181c] outline-none w-full mr-3" placeholder="Szukaj" name="search"></input>
+                <input class="text-[15px] bg-[#16181c] outline-none w-full mr-3" placeholder="Szukaj"
+                    name="search"></input>
             </div>
         </form>
-        <div class="w-full min-h-20 px-0 md:w-[600px] md:px-[16px] post hidden md:block">
+        <div class="w-full min-h-20 px-0 md:w-[600px] md:px-[16px] hide post hidden md:block">
             <form action="../php/actions/AddPost.php" method="POST" enctype="multipart/form-data">
                 <div class="flex mt-3">
                     <img src=<?php echo $userAvatar ?> class="w-11 h-11 mt-2 rounded-full" alt="">
@@ -324,8 +362,8 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
                                 <p class="text-center text-xs my-2">zdjęcie opcjonale</p>
                             </div>
                             <?php
-                                if ($_SESSION['isAdult']) {
-                                    echo "
+                            if ($_SESSION['isAdult']) {
+                                echo "
                                         <div class='form-control container'>
                                             <label class='label cursor-pointer'>
                                                 <span class='label-text'>Czy treść jest dla dorosłych</span> 
@@ -333,7 +371,7 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
                                             </label>
                                         </div>
                                     ";
-                                }
+                            }
                             ?>
                         </div>
                         <div class="justify-between items-center w-full flex mb-2">
@@ -361,18 +399,14 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
 
         $queryBuilder = new SQLQueryBuilder('posts', $conn);
         $queryBuilder->orderBy('created_at', 'DESC');
-        
+
         // if (isset($_GET['search']) && !empty($_GET['search'])) {
         //     $queryBuilder->addCondition('isForAdult', 0);
         // }
-
+        
         // if ($_SESSION['isAdult'] == 0 ) {
         //     $queryBuilder->addCondition('isForAdult', 0);
         // }
-
-        if (isset($_GET['search']) && !empty($_GET['search'])) {
-            $queryBuilder->addCondition('isForAdult', 0);
-        }
         
         if (isset($_SESSION['isAdult']) && $_SESSION['isAdult'] == 0) {
             $queryBuilder->addCondition('isForAdult', 0);
@@ -384,7 +418,7 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
                 $queryBuilder->addCondition('tag', $tagURL);
             }
         }
-        if (isset($_GET['search']) && !empty($_GET['search'])) {
+        if (isset($_GET['search'])) {
             $searchURL = $_GET['search'];
             $queryBuilder->addCondition('description', "%$searchURL%", "LIKE", "OR");
             $queryBuilder->addCondition('tag', "%$searchURL%", "LIKE", "OR");
@@ -493,33 +527,35 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
                         $img = "../php/uploads/" . $img;
                         echo "<img class='scale-img cursor-pointer mb-2' src='$img' onClick='moveToComments($postId)'>";
                     }
+                    if (isset($_SESSION["id"]) && isset($_SESSION["username"])) {
 
-                    if (($_SESSION['isAdmin'] && isset($_GET['admin']) && $_GET['admin'] === "true") || $_SESSION['id'] == $userId) {
-                        echo "<a onClick='editPost".$postId.".showModal()' class='px-4 py-2 bg-blue-500 rounded-full my-3 w-1/2 mx-auto hover:opacity-80 transition-all text-center font-bold cursor-pointer'>Edytuj Post</a>";
+                        if (($_SESSION['isAdmin'] && isset($_GET['admin']) && $_GET['admin'] === "true") || $_SESSION['id'] == $userId) {
+                            echo "<a onClick='editPost" . $postId . ".showModal()' class='px-4 py-2 bg-blue-500 rounded-full my-3 w-1/2 mx-auto hover:opacity-80 transition-all text-center font-bold cursor-pointer'>Edytuj Post</a>";
                         echo "<a href='../php/actions/deletePost.php?id=$postId&author=$userId' class='px-4 py-2 bg-red-500 rounded-full my-3 w-1/2 mx-auto hover:opacity-80 transition-all text-center font-bold cursor-pointer'>Usuń Post</a>";
                         echo '
-                        <dialog id="editPost'.$postId.'" class="modal">
+                        <dialog id="editPost' . $postId . '" class="modal">
                         <div class="modal-box bg-black border border-white w-full md:w-[600px]">
-                            <form action="../php/actions/changePost.php" method="POST" enctype="multipart/form-data">
-                                <div class="flex flex-col justify-center px-20">
-                                    <h1 class="text-3xl mb-[33px] font-bold">Edytuj Post</h1>
-                                    <input type="text" name="title" required placeholder="Tytuł" class="h-[52px] rounded-md bg-black border border-[#333639] focus:border-2 focus:border-[#179BF0] outline-none px-2" value="' . $title . '">
+                        <form action="../php/actions/changePost.php" method="POST" enctype="multipart/form-data">
+                        <div class="flex flex-col justify-center px-20">
+                        <h1 class="text-3xl mb-[33px] font-bold">Edytuj Post</h1>
+                        <input type="text" name="title" required placeholder="Tytuł" class="h-[52px] rounded-md bg-black border border-[#333639] focus:border-2 focus:border-[#179BF0] outline-none px-2" value="' . $title . '">
                                     <textarea name="desc" placeholder="Opis"
                                         class="min-h-24 h-24 resize-none mt-3 w-full bg-black border border-[#333639] outline-none rounded-md overflow-hidden p-3" required
                                         oninput="autoResizeTextarea(this)">' . $desc . '</textarea>
-                                    <input type="text" name="tag" placeholder="Tag" class="h-[52px] rounded-md bg-black border border-[#333639] focus:border-2 focus:border-[#179BF0] outline-none px-2 mt-2" value="' . $tag . '">
+                                        <input type="text" name="tag" placeholder="Tag" class="h-[52px] rounded-md bg-black border border-[#333639] focus:border-2 focus:border-[#179BF0] outline-none px-2 mt-2" value="' . $tag . '">
                                     <input type="file" name="img" accept="image/*" class="mt-[27px] file-input file-input-bordered w-full max-w-xs" />
-                                    <input type="hidden" name="postId" value="'.$postId.'" />
-                                    <input type="hidden" name="author" value="'.$userId.'" />
+                                    <input type="hidden" name="postId" value="' . $postId . '" />
+                                    <input type="hidden" name="author" value="' . $userId . '" />
                                     <button class="mt-[200px] h-[52px] bg-[#eff3f4] hover:opacity-80 transition-all text-center text-black font-bold rounded-full">Zapisz Zamiany</button>
-                                </div>
-                            </form>
+                                    </div>
+                                    </form>
                         </div>
                         <form method="dialog" class="modal-backdrop">
-                            <button>close</button>
+                        <button>close</button>
                         </form>
-                    </dialog>';
-
+                        </dialog>';
+                        
+                    }
                     }
 
                     echo '</div>
@@ -593,14 +629,15 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
                         </g>
                     </svg>
                 </div>
-                <input class="text-[15px] bg-[#16181c] outline-none w-full mr-3" placeholder="Szukaj" name="search"></input>
+                <input class="text-[15px] bg-[#16181c] outline-none w-full mr-3" placeholder="Szukaj"
+                    name="search"></input>
             </div>
         </form>
         <aside class="w-[350px] bg-[#16181c] rounded-xl mt-4">
             <div class="flex flex-col gap-1">
                 <h2 class="text-[20px] font-bold px-4 py-3">Najpopularniejsze Tagi</h2>
                 <?php
-                require_once('../php/Classes/CountTop.php');
+                require_once ('../php/Classes/CountTop.php');
                 $topElements = getTopElementsWithHighestCount($conn, 'posts', 'tag');
 
                 foreach ($topElements as $row) {
@@ -666,6 +703,9 @@ if (!isset($_SESSION["id"]) && !isset($_SESSION["username"])) {
         }
         ?>
     </div>
+    <script>
+        hideElements();
+    </script>
     <script src='./script.js'></script>
 </body>
 
